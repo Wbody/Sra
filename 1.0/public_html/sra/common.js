@@ -1,3 +1,6 @@
+String.prototype.replaceAll = function (s1, s2) {
+    return this.replace(new RegExp(s1, "gm"), s2);
+};
 var WUtil = new Object();
 WUtil.generateUUID = function (flag) {
     var d = new Date().getTime();
@@ -52,7 +55,7 @@ Type.isInteger = function (int) {
     return typeof int === Type.NUMBER && int % 1 === 0;
 };
 Type.isFloat = function (str) {
-     return typeof str === Type.NUMBER && str % 1 !== 0;
+    return typeof str === Type.NUMBER && str % 1 !== 0;
 };
 
 var StrKit = new Object();

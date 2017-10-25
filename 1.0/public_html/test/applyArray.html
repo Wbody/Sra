@@ -6,17 +6,32 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        
-        
+
+
         <!--下面为接口调用必须引用插件-->
         <script type="text/javascript" src="../lib/jquery/1.9.1/jquery.min.js"></script>
         <script type="text/javascript" src="../lib/Bootstrap/3.3.7/dist/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="../lib/WbodyJS/common.js"></script>
+
 
         <!--下面为接口渲染插件-->
-        <script type="text/javascript" src="../lib/WbodyJS/Sra.js"></script>
+        <script type="text/javascript" src="../sra/common.js"></script>
+        <script type="text/javascript" src="../sra/Sra.js"></script>
         <script>
-             
+            $(document).ready(function () {
+                var sra = new Sra();
+                sra.set({
+                    css: {
+                        container: "group",
+                        row: "item",
+                        column: "cell"
+                    },
+                    elements: {
+                        container: "div",
+                        row: "div",
+                        column: "span"
+                    }
+                }).init().target("body").applyArr(["A","B","C"]).initContainer().initRows().initColums(true).toBindContainer().toBindRows();
+            });
         </script>
     </body>
 </html>

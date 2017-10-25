@@ -13,7 +13,18 @@ function Sra() {
         this.elements(options.elements);
         return this;
     };
-    this.setting = {};
+    this.setting = {
+        css: {
+            container: "",
+            row: "",
+            column: ""
+        },
+        elements: {
+            container: "",
+            row: "",
+            column: ""
+        }
+    };
     this.context = {
         MODE: SAR.Mode.CSS, //CSS模式 普通模式（element 常用元素） HTML模式 扩展模式（element扩展成html代码）
         DATA: [],
@@ -42,13 +53,13 @@ function Sra() {
             viewValue: true
         }
     };
-    //初始化方法 必须调用 target可不传 （target 为Container即将绑定的dom对象 ）
+    //初始化方法 必须调用 
     this.init = function () {
         for (var i in SAR.ATTR) {
             var attr = SAR.ATTR[i];
             var elements = item(this.elements(), attr.toLowerCase());
             var css = item(this.css(), attr.toLowerCase());
-            this.vcontext(attr, "elements", elements);
+            this.vcontext(attr, "element", elements);
             this.vcontext(attr, "css", css);
         }
         return this;
