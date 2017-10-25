@@ -246,6 +246,7 @@ function Sra() {
         } else {
             Log.debug("容器非自建，不必调用");
         }
+        return this;
     };
     //将rows绑定到container上
     this.toBindRows = function () {

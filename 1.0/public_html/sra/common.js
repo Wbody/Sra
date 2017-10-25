@@ -10,7 +10,7 @@ WUtil.generateUUID = function (flag) {
         return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
     });
     if (flag) {
-        uuid = WUtil.replaceAll(uuid, "-", "");
+        uuid = uuid.replaceAll("-", "");
     }
     return uuid;
 };
