@@ -184,8 +184,9 @@ function Sra() {
             if (clen > 0) {
                 for (var j = 0; j < clen; j++) {
                     var colum = this.getColumn();
+                    var value;
                     if (this.context.COLUMN.viewValue === true) {
-                        var value = item(obj, fields[j]);
+                        value = item(obj, fields[j]);
                         WUtil.data(colum, "value", value);
                         WUtil.data(colum, "field", fields[j]);
                     }

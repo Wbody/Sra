@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>applyArray测试页面</title>
+        <title>sra apply测试页面</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../lib/Bootstrap/3.3.7/dist/css/bootstrap.min.css">
     </head>
     <body>
-
 
         <!--下面为接口调用必须引用插件-->
         <script type="text/javascript" src="../lib/jquery/1.9.1/jquery.min.js"></script>
@@ -18,21 +18,91 @@
         <script type="text/javascript" src="../sra/Sra.js"></script>
         <script>
             $(document).ready(function () {
-                var sra = new Sra();
-                sra.set({
+                var arr = new Sra();
+                arr.set({
                     css: {
-                        container: "group",
-                        row: "item",
-                        column: "cell"
+                        container: "group container",
+                        row: "item row",
+                        column: "cell col-md-4"
                     },
                     elements: {
                         container: "div",
                         row: "div",
-                        column: "span"
+                        column: "div"
                     }
                 }).init().applyArr(["A", "B", "C"]).initContainer().initRows().initColums(true, function (colum, field, value, obj, row, context) {
                     $(colum).text(value);
                 }).toBindContainer("body").toBindRows();
+
+
+                var obj = new Sra();
+                obj.set({
+                    css: {
+                        container: "group container",
+                        row: "item row",
+                        column: "cell col-md-4"
+                    },
+                    elements: {
+                        container: "div",
+                        row: "div",
+                        column: "div"
+                    }
+                }).init().applyJson({a: "A1", b: "B1", c: "C1"}).initContainer().initRows().initColums(true, function (colum, field, value, obj, row, context) {
+                    $(colum).text(value);
+                }).toBindContainer("body").toBindRows();
+
+
+                var empty = new Sra();
+                empty.set({
+                    css: {
+                        container: "group container",
+                        row: "item row",
+                        column: "cell col-md-4"
+                    },
+                    elements: {
+                        container: "div",
+                        row: "div",
+                        column: "div"
+                    }
+                }).init().applyContainer(1, 3).initContainer().initRows().initColums(true, function (column, field, value, obj, row, context) {
+                    var rowIndex = WUtil.getData(column, "row");
+                    var columnIndex = WUtil.getData(column, "column");
+
+                    columnIndex = Number(columnIndex);
+                    switch (columnIndex) {
+                        case 0:
+                            value = "A2";
+                            break;
+                        case 1:
+                            value = "B2";
+                            break;
+                        case 2:
+                            value = "C2";
+                            break;
+                        default:
+
+                            break;
+                    }
+                    $(column).text(value);
+                }).toBindContainer("body").toBindRows();
+
+
+                var data = new Sra();
+                data.set({
+                    css: {
+                        container: "group container",
+                        row: "item row",
+                        column: "cell col-md-4"
+                    },
+                    elements: {
+                        container: "div",
+                        row: "div",
+                        column: "div"
+                    }
+                }).init().applyData([{a:"A3",b:"B3",c:"C3",d:"D3"}],["a","b","c"]).initContainer().initRows().initColums(true, function (column, field, value, obj, row, context) {
+                    $(column).text(value);
+                }).toBindContainer("body").toBindRows();
+
             });
         </script>
     </body>
