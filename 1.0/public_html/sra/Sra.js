@@ -46,8 +46,8 @@ function Sra() {
     this.init = function () {
         for (var i in SAR.ATTR) {
             var attr = SAR.ATTR[i];
-            var elements = item(this.elements(), attr);
-            var css = item(this.css(), attr);
+            var elements = item(this.elements(), attr.toLowerCase());
+            var css = item(this.css(), attr.toLowerCase());
             this.vcontext(attr, "elements", elements);
             this.vcontext(attr, "css", css);
         }
@@ -58,7 +58,7 @@ function Sra() {
     //设置dom渲染的模式 html和CSS模式 默认css模式
     this.mode = function (type) {
         if (Validate.isUndefined(type)) {
-            type = "HTML";
+            type = SAR.Mode.HTML;
         }
         this.context.MODE = type;
         return this;
@@ -316,7 +316,12 @@ function Sra() {
 
     //设置sra渲染的父级容器
     this.target = function (target) {
-        return this.vcontext(SAR.ATTR.CONTAINER, "target", target);
+        if (Validate.isUndefined(target)) {
+            return this.vcontext(SAR.ATTR.CONTAINER, "target");
+        } else {
+            this.vcontext(SAR.ATTR.CONTAINER, "target", target);
+            return this;
+        }
     };
     //设置sra的element配置的方法
     this.elements = function (option) {
