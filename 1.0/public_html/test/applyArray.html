@@ -30,7 +30,9 @@
                         row: "div",
                         column: "span"
                     }
-                }).init().applyArr(["A","B","C"]).initContainer().initRows().initColums(true).toBindContainer("body").toBindRows();
+                }).init().applyArr(["A", "B", "C"]).initContainer().initRows().initColums(true, function (colum, field, value, obj, row, context) {
+                    $(colum).text(value);
+                }).toBindContainer("body").toBindRows();
             });
         </script>
     </body>

@@ -144,6 +144,7 @@ function Sra() {
         if (this.context.ROW.bycreate === true) {
             var rlen = this.context.ROW.length;
             var rows = new Array();
+            var context = this.context;
             for (var i = 0; i < rlen; i++) {
                 var row = this.getRow();
                 WUtil.data(row, "index", i);
@@ -154,7 +155,7 @@ function Sra() {
                 }
                 if (rowDealer) {
                     var column = this.getColumn();
-                    rowDealer.call(rowDealer, row, i, json, column);
+                    rowDealer.call(rowDealer, row, i, json, column, context);
                 }
                 rows.push(row);
             }
