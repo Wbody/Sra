@@ -73,14 +73,22 @@ function Plugin(pluginName) {
         return this.context.MAIN.target;
     };
     this.getElement = function (style, mode) {
-        var css = style.css.container;
-        var element = style.elements.container;
+        var css;
+        if (style.css) {
+            css = style.css.container;
+        }
+        var element;
+        if (style.elements) {
+            element = style.elements.container;
+        }
         var el;
-        if (SRA.Mode.CSS === mode) {
-            var selement = document.createElement(element);
-            el = $(selement).addClass(css);
-        } else if (SRA.Mode.HTML === mode) {
-            el = $(element).addClass(css);
+        if (element) {
+            if (SRA.Mode.CSS === mode) {
+                var selement = document.createElement(element);
+                el = $(selement).addClass(css);
+            } else if (SRA.Mode.HTML === mode) {
+                el = $(element).addClass(css);
+            }
         }
         return el;
     };
