@@ -1,12 +1,12 @@
 /* global Validate, Log, WUtil, StrKit, Type */
-var SAR = new Object();
-SAR.Mode = new Object();
-SAR.Mode.CSS = 1;
-SAR.Mode.HTML = 2;
-SAR.ATTR = new Object();
-SAR.ATTR.CONTAINER = "CONTAINER";
-SAR.ATTR.ROW = "ROW";
-SAR.ATTR.COLUMN = "COLUMN";
+var SRA = new Object();
+SRA.Mode = new Object();
+SRA.Mode.CSS = 1;
+SRA.Mode.HTML = 2;
+SRA.ATTR = new Object();
+SRA.ATTR.CONTAINER = "CONTAINER";
+SRA.ATTR.ROW = "ROW";
+SRA.ATTR.COLUMN = "COLUMN";
 function Sra() {
     this.set = function (options) { //设置两个样式配置参数
         this.css(options.css);
@@ -26,7 +26,7 @@ function Sra() {
         }
     };
     this.context = {
-        MODE: SAR.Mode.CSS, //CSS模式 普通模式（element 常用元素） HTML模式 扩展模式（element扩展成html代码）
+        MODE: SRA.Mode.CSS, //CSS模式 普通模式（element 常用元素） HTML模式 扩展模式（element扩展成html代码）
         DATA: [],
         CONTAINER: {
             target: "",
@@ -55,8 +55,8 @@ function Sra() {
     };
     //初始化方法 必须调用 
     this.init = function () {
-        for (var i in SAR.ATTR) {
-            var attr = SAR.ATTR[i];
+        for (var i in SRA.ATTR) {
+            var attr = SRA.ATTR[i];
             var elements = item(this.elements(), attr.toLowerCase());
             var css = item(this.css(), attr.toLowerCase());
             this.vcontext(attr, "element", elements);
@@ -69,7 +69,7 @@ function Sra() {
     //设置dom渲染的模式 html和CSS模式 默认css模式
     this.mode = function (type) {
         if (Validate.isUndefined(type)) {
-            type = SAR.Mode.HTML;
+            type = SRA.Mode.HTML;
         }
         this.context.MODE = type;
         return this;
@@ -212,15 +212,15 @@ function Sra() {
 
     //获取一个按配置生成的未绑定的Column对象
     this.getColumn = function () {
-        return this.getSettingElement(SAR.ATTR.COLUMN);
+        return this.getSettingElement(SRA.ATTR.COLUMN);
     };
     //获取一个按配置生成的未绑定的Row对象
     this.getRow = function () {
-        return this.getSettingElement(SAR.ATTR.ROW);
+        return this.getSettingElement(SRA.ATTR.ROW);
     };
     //获取一个按配置生成的未绑定的Container对象
     this.getContainer = function () {
-        return this.getSettingElement(SAR.ATTR.CONTAINER);
+        return this.getSettingElement(SRA.ATTR.CONTAINER);
     };
 
     this.getSettingElement = function (attr) {
@@ -228,10 +228,10 @@ function Sra() {
         var element = this.context[attr].element;
         var css = this.context[attr].css;
         var mode = this.context.MODE;
-        if (SAR.Mode.CSS === mode) { //mode第一个特性 
+        if (SRA.Mode.CSS === mode) { //mode第一个特性 
             var selement = document.createElement(element);
             el = $(selement).addClass(css);
-        } else if (SAR.Mode.HTML === mode) {
+        } else if (SRA.Mode.HTML === mode) {
             el = $(element).addClass(css);
         }
         return el;
@@ -269,8 +269,11 @@ function Sra() {
     //强制设置第一行row，且container只有一行row 
     //多用于持续渲染时，不想多创建container Dom的情况
     this.setRow = function (row) {
+        var css = this.context[SRA.ATTR.ROW].css;
+        $(row).addClass(css);
         this.context.ROW.length = 1;
         this.context.ROW.rows = [row];
+        this.context.CONTAINER.bycreate = false;
         this.context.ROW.bycreate = false;
         return this;
     };
@@ -283,6 +286,8 @@ function Sra() {
     //强制设置Container 
     //多用组合渲染时，不想多创建Container Dom的情况
     this.setContainer = function (container) {
+        var css = this.context[SRA.ATTR.CONTAINER].css;
+        $(container).addClass(css);
         this.context.CONTAINER.bycreate = false;
         this.context.CONTAINER.container = container;
         return this;
@@ -331,9 +336,9 @@ function Sra() {
     //设置sra渲染的父级容器
     this.target = function (target) {
         if (Validate.isUndefined(target)) {
-            return this.vcontext(SAR.ATTR.CONTAINER, "target");
+            return this.vcontext(SRA.ATTR.CONTAINER, "target");
         } else {
-            this.vcontext(SAR.ATTR.CONTAINER, "target", target);
+            this.vcontext(SRA.ATTR.CONTAINER, "target", target);
             return this;
         }
     };

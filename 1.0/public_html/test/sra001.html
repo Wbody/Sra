@@ -5,6 +5,21 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="../lib/Bootstrap/3.3.7/dist/css/bootstrap.min.css">
+        <style>
+            .border{
+                border-bottom: 1px solid #eaeaea;
+            }
+            .p-10{
+                padding: 10px;
+            }
+            .tbody-group,.thead-group{
+                padding: 0px;
+            }
+            /*清除浮动*/
+            .overflow-hidden{
+                overflow:hidden;
+            }
+        </style>
     </head>
     <body>
 
@@ -17,28 +32,167 @@
         <script type="text/javascript" src="../sra/Sra.js"></script>
         <script>
             $(document).ready(function () {
-
+                initTable("body", SRA.Mode.CSS, style, "Table插件草稿期", data, fieldOptions);
             });
-
-            function initTable(target, setting, fieldOptions) {
-                var data = new Sra();
-                data.set({
+            var style = {
+                main: {
                     css: {
-                        container: "WTable container",
-                        row: "WTable-item row",
-                        column: "WTable-cell col-md-4 text-center"
+                        container: "container",
+                        row: "border p-10 text-center row"
                     },
                     elements: {
                         container: "div",
                         row: "div",
                         column: "div"
                     }
-                }).init().applyContainer(1, 3).initContainer().initRows(function (row, rowindex, json, column, context) {
-
-
-                }).initColums(true, function (column, field, value, obj, row, context) {
-                    $(column).text(value);
-
+                },
+                title: {
+                    element: "label"
+                },
+                thead: {
+                    css: {
+                        container: "thead-group",
+                        row: "overflow-hidden",
+                        column: "p-10 col-xs-4 text-center"
+                    },
+                    elements: {
+                        row: "div",
+                        column: "div"
+                    }
+                },
+                tbody: {
+                    css: {
+                        container: "tbody-group",
+                        row: "overflow-hidden border",
+                        column: "p-10 col-xs-4 text-center"
+                    },
+                    elements: {
+                        row: "div",
+                        column: "div"
+                    }
+                }
+            };
+            var data = [{
+                    name: "Wbody",
+                    sex: 1,
+                    age: 25
+                }, {
+                    name: "Wbody",
+                    sex: 1,
+                    age: 25
+                }, {
+                    name: "Wbody",
+                    sex: 1,
+                    age: 25
+                }];
+            var fieldOptions = {
+                name: {
+                    name: "姓名",
+                    resetClass: "",
+                    nameDealer: function (value) {
+                        return  value;
+                    },
+                    valueDealer: function (value) {
+                        return  value;
+                    }
+                },
+                sex: {
+                    name: "性别",
+                    resetClass: "",
+                    nameDealer: function (value) {
+                        return  value;
+                    },
+                    valueDealer: function (value) {
+                        if (value === 1) {
+                            value = "男";
+                        } else if (value === 2) {
+                            value = "女";
+                        } else if (value === 0) {
+                            value = "未知";
+                        }
+                        return  value;
+                    }
+                },
+                age: {
+                    name: "年龄",
+                    resetClass: "",
+                    nameDealer: function (value) {
+                        return  value;
+                    },
+                    valueDealer: function (value) {
+                        return  value;
+                    }
+                }
+            };
+            function getElement(style, mode) {
+                var css = style.css;
+                var element = style.element;
+                var el;
+                if (SRA.Mode.CSS === mode) { //mode第一个特性 
+                    var selement = document.createElement(element);
+                    el = $(selement).addClass(css);
+                } else if (SRA.Mode.HTML === mode) {
+                    el = $(element).addClass(css);
+                }
+                return el;
+            }
+            function initTable(target, mode, style, title, data, fieldOptions) {// 一般都停留在row层面来进行持续sra
+                var fieldArr = new Array();
+                var fieldObj = {};
+                var fieldNameDealer = {};
+                var fieldValueDealer = {};
+                var fieldValueResetClass = {};
+                for (var i in  fieldOptions) {
+                    fieldObj[i] = fieldOptions[i].name;
+                    fieldNameDealer[i] = fieldOptions[i].nameDealer;
+                    fieldValueDealer[i] = fieldOptions[i].valueDealer;
+                    fieldValueResetClass[i] = fieldOptions[i].resetClass;
+                    fieldArr.push(i);
+                }
+                var main = new Sra();
+                main.set(style.main).init().mode(mode).applyContainer(3, 1).initContainer().initRows(function (row, rowindex, json, column, context) {
+                    switch (rowindex) {
+                        case 0:
+//                            $(row).text("标题");
+                            var el = getElement(style.title, mode);
+                            $(el).append(title);
+                            $(row).append($(el));
+                            break;
+                        case 1: //isSra
+//                              $(row).text("表头");
+                            var thead = new Sra();
+                            thead.set(style.thead).init().applyJson(fieldObj, fieldArr)
+                                    .setContainer(row)
+                                    .initContainer()
+                                    .initRows()
+                                    .initColums(true, function (column, field, value, obj, row, context) {
+                                        var dealer = fieldNameDealer[field];
+                                        if (!Validate.isUndefined(dealer)) {
+                                            value = dealer.call(dealer, value);
+                                        }
+                                        $(column).append(value);
+                                    }).toBindRows();
+                            break;
+                        case 2:
+//                            $(row).text("内容");
+                            var tbody = new Sra();
+                            tbody.set(style.tbody).init().applyData(data, fieldArr)
+                                    .setContainer(row)
+                                    .initContainer()
+                                    .initRows()
+                                    .initColums(true, function (column, field, value, obj, row, context) {
+                                        var dealer = fieldValueDealer[field];
+                                        var css = fieldValueResetClass[field];
+                                        $(column).addClass(css);
+                                        if (!Validate.isUndefined(dealer)) {
+                                            value = dealer.call(dealer, value);
+                                        }
+                                        $(column).append(value);
+                                    }).toBindRows();
+                            break;
+                        default:
+                            break;
+                    }
                 }).toBindContainer(target).toBindRows();
             }
         </script>
