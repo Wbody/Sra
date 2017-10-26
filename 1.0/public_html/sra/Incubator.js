@@ -44,8 +44,20 @@ function Plugin(pluginName) {
                 }
             };
         }
+        var main = {
+            css: {
+                container: pluginName + "_group",
+                row: pluginName + "_item"
+            },
+            elements: {
+                container: "div",
+                row: "div"
+            }
+        };
+        this.style.main = main;
         this.context.MAIN.target = target;
         this.style = WUtil.andData(this.style, style);
+
         return this;
     };
     this.protocol = function (attr, protocols) {
@@ -110,21 +122,21 @@ function Plugin(pluginName) {
                                 }
                                 protocol.dataOption.data = sdata;
 
-                                var fieldOption = protocol.fieldOption;
                                 var fieldArr = new Array();
                                 var fieldDealer = {};
                                 var fieldCss = {};
-                                if (Type.isArray(fieldOption)) {
-                                    fieldArr = fieldOption;
-                                } else {
-                                    for (var i in  fieldOption) {
-                                        fieldDealer[i] = fieldOption[i].dealer;
-                                        fieldCss[i] = fieldOption[i].css;
-                                        fieldArr.push(i);
+                                var fieldOption = protocol.fieldOption;
+                                if (!Validate.isUndefined(fieldOption)) {
+                                    if (Type.isArray(fieldOption)) {
+                                        fieldArr = fieldOption;
+                                    } else {
+                                        for (var i in  fieldOption) {
+                                            fieldDealer[i] = fieldOption[i].dealer;
+                                            fieldCss[i] = fieldOption[i].css;
+                                            fieldArr.push(i);
+                                        }
                                     }
                                 }
-
-
                                 if (Type.isArray(sdata)) {
                                     attrSra.applyData(sdata, fieldArr);
                                 } else {

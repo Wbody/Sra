@@ -101,7 +101,7 @@ function Sra() {
     };
     //一行多列（渲染obj数据）
     this.applyJson = function (obj, fieldArray) {
-        if (Validate.isUndefined(fieldArray)) {
+        if (Validate.isEmpty(fieldArray)) {
             fieldArray = new Array();
             for (var i in obj) {
                 fieldArray.push(i);
@@ -231,7 +231,7 @@ function Sra() {
         var element = this.context[attr].element;
         var css = this.context[attr].css;
         var mode = this.context.MODE;
-        if (!Validate.isUndefined(element)) {
+        if (!Validate.isEmpty(element)) {
             if (SRA.Mode.CSS === mode) {
                 var selement = document.createElement(element);
                 el = $(selement).addClass(css);

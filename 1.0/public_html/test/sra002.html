@@ -45,33 +45,71 @@
                     sex: 1,
                     age: 25
                 }];
+            var style = {
+                main: {
+                    css: {
+                        container: "container",
+                        row: "border p-10 text-center row"
+                    },
+                    elements: {
+                        container: "div",
+                        row: "div",
+                        column: "div"
+                    }
+                },
+                thead: {
+                    css: {
+                        container: "thead-group",
+                        row: "overflow-hidden",
+                        column: "p-10 col-xs-4 text-center"
+                    },
+                    elements: {
+                        row: "div",
+                        column: "div"
+                    }
+                },
+                tbody: {
+                    css: {
+                        container: "tbody-group",
+                        row: "overflow-hidden border",
+                        column: "p-10 col-xs-4 text-center"
+                    },
+                    elements: {
+                        row: "div",
+                        column: "div"
+                    }
+                }
+            };
+            var tableSetting = {
+                title: {
+                    isSra: false,
+                    text: "快速构建渲染Data的插件(默认孵化器版)"
+                },
+                thead: {
+                    isSra: true,
+                    dataOption: {
+                        dealer: function (data) {
+                            var object = {
+                                name: "姓名",
+                                sex: "性别",
+                                age: "年龄"
+                            };
+                            return object;
+                        }
+                    }
+                },
+                tbody: {
+                    isSra: true,
+                    fieldOption: ["name", "sex", "age"]
+                },
+                tfooter: {
+                    isSra: false,
+                    text: "尾部"
+                }
+            };
             $(document).ready(function () {
                 var table = new Plugin("table");
-                table.protocol(["title", "thead", "tbody", "tfooter"], {
-                    title: {
-                        isSra: false,
-                        text: "快速构建渲染Data的插件(默认孵化器版)",
-                        dealer: function (text) {
-                            return text + "_sss";
-                        }
-                    },
-                    thead: {
-                        isSra: true,
-                        dataOption: {
-                            dealer: function (data) {
-                                return {
-                                    name: "姓名",
-                                    sex: "性别",
-                                    age: "年龄"
-                                };
-                            }
-                        }
-                    },
-                    tbody: {
-                        isSra: true,
-                        fieldOption: ["name", "sex", "age"]
-                    }
-                }).set("body").apply(data);
+                table.protocol(["title", "thead", "tbody", "tfooter"], tableSetting).set("body", style).apply(data);
             });
         </script>
     </body>
