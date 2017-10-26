@@ -20,7 +20,21 @@ WUtil.data = function (o, key, value) {
 WUtil.getData = function (o, key) {
     return $(o).attr("data-" + key);
 };
-
+//合并obj，obj1 相同字段以obj1为准
+WUtil.andData = function (obj, obj1) {
+    var object = new Object();
+    for (var i in obj) {
+        var attr = i;
+        var attrValue = obj[i];
+        object[attr] = attrValue;
+    }
+    for (var i in obj1) {
+        var attr = i;
+        var attrValue = obj1[i];
+        object[attr] = attrValue;
+    }
+    return object;
+};
 
 var Validate = new Object();
 Validate.isUndefined = function (obj) {

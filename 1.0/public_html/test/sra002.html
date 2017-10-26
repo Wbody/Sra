@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>快速构建渲染Data的插件(默认孵化器版)</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../lib/Bootstrap/3.3.7/dist/css/bootstrap.min.css">
+        <style>
+            .border{
+                border-bottom: 1px solid #eaeaea;
+            }
+            .p-10{
+                padding: 10px;
+            }
+            .tbody-group,.thead-group{
+                padding: 0px;
+            }
+            /*清除浮动*/
+            .overflow-hidden{
+                overflow:hidden;
+            }
+        </style>
+    </head>
+    <body>
+
+
+        <!--下面为接口调用必须引用插件-->
+        <script type="text/javascript" src="../lib/jquery/1.9.1/jquery.min.js"></script>
+
+        <!--下面为接口渲染插件-->
+        <script type="text/javascript" src="../WbodyJS/common.js"></script>
+        <script type="text/javascript" src="../sra/Sra.js"></script>
+        <script type="text/javascript" src="../sra/Incubator.js"></script>
+        <script>
+            var data = [{
+                    name: "Wbody",
+                    sex: 1,
+                    age: 25
+                }, {
+                    name: "Wbody",
+                    sex: 1,
+                    age: 25
+                }, {
+                    name: "Wbody",
+                    sex: 1,
+                    age: 25
+                }];
+            $(document).ready(function () {
+                var table = new Plugin("table");
+                table.protocol(["title", "thead", "tbody", "tfooter"], {
+                    title: {
+                        isSra: false,
+                        text: "快速构建渲染Data的插件(默认孵化器版)",
+                        dealer: function (text) {
+                            return text + "_sss";
+                        }
+                    },
+                    thead: {
+                        isSra: true,
+                        dataOption: {
+                            dealer: function (data) {
+                                return {
+                                    name: "姓名",
+                                    sex: "性别",
+                                    age: "年龄"
+                                };
+                            }
+                        }
+                    },
+                    tbody: {
+                        isSra: true,
+                        fieldOption: ["name", "sex", "age"]
+                    }
+                }).set("body").apply(data);
+            });
+        </script>
+    </body>
+</html>

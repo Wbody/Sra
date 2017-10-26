@@ -29,7 +29,7 @@
                         row: "div",
                         column: "div"
                     }
-                }).init().applyArr(["A", "B", "C"]).initContainer().initRows().initColums(true, function (colum, field, value, obj, row, context) {
+                }).applyArr(["A", "B", "C"]).initContainer().initRows().initColums(true, function (colum, field, value, obj, row, context) {
                     $(colum).text(value);
                 }).toBindContainer("body").toBindRows();
 
@@ -46,7 +46,7 @@
                         row: "div",
                         column: "div"
                     }
-                }).init().applyJson({a: "A1", b: "B1", c: "C1"}).initContainer().initRows().initColums(true, function (colum, field, value, obj, row, context) {
+                }).applyJson({a: "A1", b: "B1", c: "C1"}).initContainer().initRows().initColums(true, function (colum, field, value, obj, row, context) {
                     $(colum).text(value);
                 }).toBindContainer("body").toBindRows();
 
@@ -63,7 +63,7 @@
                         row: "div",
                         column: "div"
                     }
-                }).init().applyContainer(1, 3).initContainer().initRows().initColums(true, function (column, field, value, obj, row, context) {
+                }).applyContainer(1, 3).initContainer().initRows().initColums(true, function (column, field, value, obj, row, context) {
                     var rowIndex = WUtil.getData(column, "row");
                     var columnIndex = WUtil.getData(column, "column");
 
@@ -98,7 +98,7 @@
                         row: "div",
                         column: "div"
                     }
-                }).init().applyData([{a: "A3", b: "B3", c: "C3", d: "D3"}], ["a", "b", "c"]).initContainer().initRows().initColums(true, function (column, field, value, obj, row, context) {
+                }).applyData([{a: "A3", b: "B3", c: "C3", d: "D3"}], ["a", "b", "c"]).initContainer().initRows().initColums(true, function (column, field, value, obj, row, context) {
                     $(column).text(value);
                 }).toBindContainer("body").toBindRows();
 

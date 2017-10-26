@@ -150,7 +150,7 @@
                     fieldArr.push(i);
                 }
                 var main = new Sra();
-                main.set(style.main).init().mode(mode).applyContainer(3, 1).initContainer().initRows(function (row, rowindex, json, column, context) {
+                main.set(style.main).mode(mode).applyContainer(3, 1).initContainer().initRows(function (row, rowindex, json, column, context) {
                     switch (rowindex) {
                         case 0:
 //                            $(row).text("标题");
@@ -161,7 +161,7 @@
                         case 1: //isSra
 //                              $(row).text("表头");
                             var thead = new Sra();
-                            thead.set(style.thead).init().applyJson(fieldObj, fieldArr)
+                            thead.set(style.thead).applyJson(fieldObj, fieldArr)
                                     .setContainer(row)
                                     .initContainer()
                                     .initRows()
@@ -176,7 +176,7 @@
                         case 2:
 //                            $(row).text("内容");
                             var tbody = new Sra();
-                            tbody.set(style.tbody).init().applyData(data, fieldArr)
+                            tbody.set(style.tbody).applyData(data, fieldArr)
                                     .setContainer(row)
                                     .initContainer()
                                     .initRows()

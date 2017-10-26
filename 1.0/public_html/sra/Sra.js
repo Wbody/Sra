@@ -11,6 +11,7 @@ function Sra() {
     this.set = function (options) { //设置两个样式配置参数
         this.css(options.css);
         this.elements(options.elements);
+        this.init();
         return this;
     };
     this.setting = {
@@ -53,7 +54,7 @@ function Sra() {
             viewValue: true
         }
     };
-    //初始化方法 必须调用 
+    //初始化方法
     this.init = function () {
         for (var i in SRA.ATTR) {
             var attr = SRA.ATTR[i];
@@ -99,10 +100,12 @@ function Sra() {
         return this.applyData([obj], fieldArray);
     };
     //一行多列（渲染obj数据）
-    this.applyJson = function (obj) {
-        var fieldArray = new Array();
-        for (var i in obj) {
-            fieldArray.push(i);
+    this.applyJson = function (obj, fieldArray) {
+        if (Validate.isUndefined(fieldArray)) {
+            fieldArray = new Array();
+            for (var i in obj) {
+                fieldArray.push(i);
+            }
         }
         return this.applyData([obj], fieldArray);
     };
