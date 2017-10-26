@@ -19,13 +19,11 @@ function Plugin(pluginName) {
         main: {
             css: {
                 container: "group",
-                row: "item",
-                column: "cell"
+                row: "item"
             },
             elements: {
                 container: "div",
-                row: "div",
-                column: "div"
+                row: "div"
             }
         }
     };
@@ -103,7 +101,7 @@ function Plugin(pluginName) {
                                 var dataOption = protocol.dataOption;
                                 if (Validate.isUndefined(dataOption)) {
                                     dataOption = {};
-                                    protocol.dataOption=dataOption;
+                                    protocol.dataOption = dataOption;
                                 }
                                 var sdata = data;
                                 var dealer = dataOption.dealer;

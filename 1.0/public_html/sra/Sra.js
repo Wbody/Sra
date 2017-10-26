@@ -231,11 +231,13 @@ function Sra() {
         var element = this.context[attr].element;
         var css = this.context[attr].css;
         var mode = this.context.MODE;
-        if (SRA.Mode.CSS === mode) { //mode第一个特性 
-            var selement = document.createElement(element);
-            el = $(selement).addClass(css);
-        } else if (SRA.Mode.HTML === mode) {
-            el = $(element).addClass(css);
+        if (!Validate.isUndefined(element)) {
+            if (SRA.Mode.CSS === mode) {
+                var selement = document.createElement(element);
+                el = $(selement).addClass(css);
+            } else if (SRA.Mode.HTML === mode) {
+                el = $(element).addClass(css);
+            }
         }
         return el;
     };
