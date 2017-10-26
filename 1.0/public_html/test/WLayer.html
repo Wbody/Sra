@@ -47,6 +47,10 @@
                 WLayer.destory();
                 WLayer.show("#inline-block");
 
+
+                $(window).resize(function () {
+                    WLayer.resize("#inline-block");
+                });
             });
         </script>
     </body>

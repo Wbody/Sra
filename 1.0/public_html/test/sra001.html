@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>快速构建渲染Data的插件(草稿版)</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../lib/Bootstrap/3.3.7/dist/css/bootstrap.min.css">
+    </head>
+    <body>
+
+
+        <!--下面为接口调用必须引用插件-->
+        <script type="text/javascript" src="../lib/jquery/1.9.1/jquery.min.js"></script>
+
+        <!--下面为接口渲染插件-->
+        <script type="text/javascript" src="../WbodyJS/common.js"></script>
+        <script type="text/javascript" src="../sra/Sra.js"></script>
+        <script>
+            $(document).ready(function () {
+
+            });
+
+            function initTable(target, setting, fieldOptions) {
+                var data = new Sra();
+                data.set({
+                    css: {
+                        container: "WTable container",
+                        row: "WTable-item row",
+                        column: "WTable-cell col-md-4 text-center"
+                    },
+                    elements: {
+                        container: "div",
+                        row: "div",
+                        column: "div"
+                    }
+                }).init().applyContainer(1, 3).initContainer().initRows(function (row, rowindex, json, column, context) {
+
+
+                }).initColums(true, function (column, field, value, obj, row, context) {
+                    $(column).text(value);
+
+                }).toBindContainer(target).toBindRows();
+            }
+        </script>
+    </body>
+</html>

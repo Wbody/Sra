@@ -87,6 +87,24 @@ WLayer.show = function (target) {
     WProcess.pushSet(target, true);
     return this;
 };
+WLayer.resize = function (target) {
+    if (Validate.isUndefined(target)) {
+        target = "body";
+    } else {
+        $(target).find(".inline-Wlayer").css({
+            width: $(target).outerWidth(),
+            height: $(target).outerHeight(),
+            top: $(target).offset().top,
+            left: $(target).offset().left
+        });
+        $(target).find(".inline-WlayerLabel").css({
+            width: $(target).outerWidth(),
+            height: $(target).outerHeight(),
+            top: $(target).offset().top,
+            left: $(target).offset().left
+        });
+    }
+};
 WLayer.qhide = function (target) {
     if (Validate.isUndefined(target)) {
         target = "body";
