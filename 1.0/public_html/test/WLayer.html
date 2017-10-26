@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>WLayer 遮罩层</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../lib/Bootstrap/3.3.7/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../WbodyJS/css/common.css">
+        <style>
+            #inline-block{
+                width: 200px;
+                height: 200px;
+                background-color: #1b6d85;
+                margin: auto;
+                margin-top: 200px;
+            }
+        </style>
+    </head>
+    <body >
+        <div id="inline-block">
+            dsdfsdf
+        </div>
+        <!--下面为调用必须引用插件-->
+        <script type="text/javascript" src="../lib/jquery/1.9.1/jquery.min.js"></script>
+        <!--下面为渲染插件-->
+        <script type="text/javascript" src="../WbodyJS/common.js"></script>
+        <script type="text/javascript" src="../WbodyJS/Process.js"></script>
+        <script type="text/javascript" src="../WbodyJS/WLayer.js"></script>
+        <script>
+            $(document).ready(function () {
+                Log.openLog();
+                //正常情况是 调用一次show显示 调用一次hide隐藏
+                WLayer.show();
+                WLayer.hide();
+
+                //少了一次hide 
+                WLayer.show();
+                WLayer.show();
+                WLayer.hide();
+
+                //可以使用qhide强制隐藏
+                WLayer.show();
+                WLayer.show();
+                WLayer.qhide();
+
+                //删除相关的dom
+                WLayer.destory();
+                WLayer.show("#inline-block");
+
+            });
+        </script>
+    </body>
+</html>

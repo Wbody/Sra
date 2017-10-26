@@ -13,7 +13,7 @@
 
 
         <!--下面为接口渲染插件-->
-        <script type="text/javascript" src="../sra/common.js"></script>
+        <script type="text/javascript" src="../WbodyJS/common.js"></script>
         <script type="text/javascript" src="../sra/Sra.js"></script>
         <script>
             $(document).ready(function () {
@@ -98,7 +98,7 @@
                         row: "div",
                         column: "div"
                     }
-                }).init().applyData([{a:"A3",b:"B3",c:"C3",d:"D3"}],["a","b","c"]).initContainer().initRows().initColums(true, function (column, field, value, obj, row, context) {
+                }).init().applyData([{a: "A3", b: "B3", c: "C3", d: "D3"}], ["a", "b", "c"]).initContainer().initRows().initColums(true, function (column, field, value, obj, row, context) {
                     $(column).text(value);
                 }).toBindContainer("body").toBindRows();
 
