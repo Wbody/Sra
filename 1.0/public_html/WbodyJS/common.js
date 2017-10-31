@@ -35,7 +35,9 @@ WUtil.andData = function (obj, obj1) {
     }
     return object;
 };
-
+WUtil.random = function (m, n) {
+    return parseInt(Math.random() * (n - m + 1) + m);
+};
 var Validate = new Object();
 Validate.isUndefined = function (obj) {
     return (typeof (obj) === "undefined");

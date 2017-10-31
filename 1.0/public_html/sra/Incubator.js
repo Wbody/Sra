@@ -206,7 +206,9 @@ function Plugin(pluginName) {
                                 }
                                 protocol.dom = el;
                                 pluginContext[attr.toUpperCase()] = protocol;
-                                $(el).append(text);
+                                if (text) {
+                                    $(el).append(text);
+                                }
                                 $(row).append($(el));
                             }
                         } else {
