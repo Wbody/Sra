@@ -119,6 +119,10 @@ function Plugin(pluginName) {
                                     protocol.style = style[attr];
                                     attrSra.set(style[attr]);
                                 }
+                                var mode = protocol.mode;
+                                if (!Validate.isUndefined(mode)) {
+                                    attrSra.mode(mode);
+                                }
                                 var sdata = protocol.data;
 
                                 if (Validate.isUndefined(sdata)) {
