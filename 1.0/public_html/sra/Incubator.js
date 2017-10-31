@@ -108,6 +108,7 @@ function Plugin(pluginName) {
                     .initRows(function (row, rowindex) {
                         var attr = pluginContext.MAIN.attr[rowindex];
                         var protocol = protocols[attr];
+
                         if (!Validate.isUndefined(protocol)) {
                             var isSra = protocol.isSra;
                             if (isSra) {
@@ -118,49 +119,53 @@ function Plugin(pluginName) {
                                     protocol.style = style[attr];
                                     attrSra.set(style[attr]);
                                 }
-                                var dataOption = protocol.dataOption;
-                                if (Validate.isUndefined(dataOption)) {
-                                    dataOption = {};
-                                    protocol.dataOption = dataOption;
+                                var sdata = protocol.sdata;
+
+                                if (Validate.isUndefined(sdata)) {
+                                    sdata = data;
                                 }
-                                var sdata = data;
-                                var dealer = dataOption.dealer;
+                                var dealer = protocol.dataDealer;
+
                                 if (!Validate.isUndefined(dealer)) {
                                     sdata = dealer.call(dealer, sdata);
                                 }
-                                protocol.dataOption.data = sdata;
+                                protocol.data = sdata;
 
                                 var fieldArr = new Array();
-                                var fieldDealer = {};
-                                var fieldCss = {};
                                 var fieldOption = protocol.fieldOption;
                                 if (!Validate.isUndefined(fieldOption)) {
                                     if (Type.isArray(fieldOption)) {
                                         fieldArr = fieldOption;
                                     } else {
                                         for (var i in  fieldOption) {
-                                            fieldDealer[i] = fieldOption[i].dealer;
-                                            fieldCss[i] = fieldOption[i].css;
                                             fieldArr.push(i);
                                         }
                                     }
                                 }
-                                if (Type.isArray(sdata)) {
-                                    attrSra.applyData(sdata, fieldArr);
+                                if (Validate.isEmpty(sdata)) {
+                                    attrSra.applyArr(fieldArr);
                                 } else {
-                                    attrSra.applyJson(sdata, fieldArr);
+                                    if (Type.isArray(sdata)) {
+                                        attrSra.applyData(sdata, fieldArr);
+                                    } else {
+                                        attrSra.applyJson(sdata, fieldArr);
+                                    }
                                 }
+                                var gfieldDeaer = protocol.fieldDeaer;
                                 attrSra.setContainer(row)
                                         .initContainer()
                                         .initRows()
                                         .initColums(true, function (column, field, value, obj, row, context) {
-                                            var dealer = fieldDealer[field];
-                                            var css = fieldCss[field];
-                                            $(column).addClass(css);
-                                            if (!Validate.isUndefined(dealer)) {
-                                                value = dealer.call(dealer, value, field, obj, column, row, context);
+                                            if (!Type.isArray(fieldOption)) {
+                                                var fieldDealer = fieldOption[field].dealer;
+                                                if (!Validate.isUndefined(fieldDealer)) {
+                                                    value = dealer.call(dealer, value, obj, column);
+                                                }
                                             }
-                                            $(column).append(value);
+                                            value = gfieldDeaer.call(gfieldDeaer, value, obj, column);
+                                            if (!Validate.isEmpty(value)) {
+                                                $(column).append(value);
+                                            }
                                         }).toBindRows();
                                 protocol.sra = attrSra;
                                 pluginContext[attr.toUpperCase()] = protocol;
