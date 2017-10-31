@@ -1,0 +1,334 @@
+/* 
+    Created on : 2017-10-31, 20:01:29
+    Author     : Wbody <2903056737@qq.com>
+*/
+.backgroup{
+    width: 32rem;
+    height: 18rem;
+    background-image: url(../image/back.png);
+    background-position: center;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+.header{
+    margin-left: auto;
+    margin-right: auto;
+    width: 26rem;
+    height: 1.6rem;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+}
+.header_item{
+    float: left;
+}
+.header_l,.header_r{
+    width:10rem;
+    height:0.8rem;
+    font-size: 0.48rem;
+    color: #fff;
+    background-position: center;
+    background-size: auto 100% ;
+    padding: 0.5rem 0;
+
+    line-height: 0.0rem;
+    background-repeat: no-repeat;
+}
+.header_l{
+    background-image: url(../image/title_l.png);  
+    padding-left: 2.3rem;
+}
+.header_r{
+    background-image: url(../image/title_r.png);  
+    padding-left: 2.3rem;
+}
+.header_c{
+    width: 6rem;
+    font-size: 0.60rem;
+    color: #6ddafa;
+    text-align: center;
+}
+.body{
+    padding-left: 0.66rem;
+    padding-right: 0.66rem;
+    height:16.18rem;
+}
+.body_item,.body_c_c_item,.ybp_item{
+    float: left;
+}
+
+.body_l{
+    width: 6rem;
+    height: 100%;
+}
+.body_r{
+    width: 6rem;
+    height: 100%;
+}
+.body_c{
+    width: calc(100% - 12rem);
+    padding-left: 0.84rem;
+    padding-right: 0.84rem;
+    padding-top: 0.6rem;
+    height: 100%;
+}
+.map{
+    width: 17rem;
+    height: 11.5rem;
+    border:1px solid #1dc4f14d;
+    margin-bottom: 0.3rem;
+}
+.body_c_c_item{
+    height: 3.3rem;
+}
+.body_c_c_l{
+    width: 3.6rem;
+}
+.ybp_item{
+    width: calc(2rem - 1px);
+    height: 2rem;
+}
+.body_c_c_c{
+    width: 6.8rem;
+}
+.body_c_c_r{
+    width: calc(100% - 11rem);
+}
+
+/*form样式 不包含宽高*/
+.border{
+    border: 0.01rem solid transparent;
+}
+.border_inline{
+    border-top: 0 !important;
+}
+.border_b{
+    border: 0.01rem solid #1dc4fe;
+    border-top: 0px !important;
+}
+.border_a{
+    border-top: 0.01rem solid #1dc4fe;
+}
+.form_label{
+    border-right: 0.01rem solid #1dc4fe;
+    color: #008eff;
+}
+.EMPTY{
+    color: transparent;
+}
+.form{
+    color: #addafe;
+    width: 6rem;
+    font-size: 0.2rem;
+    margin-bottom: 0.22rem;
+}
+.form_title{
+    color: #fff;
+    background-color: #1dc4f14d;
+    height: 0.48rem;
+    line-height:0.50rem;
+    font-size: 0.24rem;
+}
+.form_label{
+    width: 1.08rem;
+    height: 0.48rem;
+    line-height:0.48rem;
+    font-size: 0.2rem;
+}
+.form_slabel{
+    font-size: 0.16rem;
+}
+.form_value{
+    width: calc(100% - 1.08rem);
+    height: 0.48rem;
+    line-height:0.48rem;
+}
+.form_value img{
+    width: 0.30rem;
+}
+.backgroup{
+    background-image: url(../image/back.png);
+    background-position: center;
+    background-size: auto;
+    background-repeat: no-repeat;
+}
+.col-xs-12{
+    width: 100% !important;
+}
+.picture_box{
+    margin-top: 0.18rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0.1rem;
+    width: 6rem;
+    height: 3rem;
+    background-image: url(../image/picture_back.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: center;
+}
+.picture_box img{
+    width: calc(100%);
+    height:  calc(100%);
+}
+.ybp_item_l,.ybp_item_r{
+    padding-top:  20px;
+}
+.chart_title{
+    height: 0.5rem;
+    line-height:  0.5rem;
+    font-size: 0.24rem;
+    color: #1dc4f1;
+    margin-bottom: 0.2rem;
+}
+.chart_label{
+    font-size: 0.24rem;
+    color: #4fe6d7;
+}
+.chart_title img{
+    margin-right: 10px;
+    height: 80%;
+}
+.chart_number_item{
+    float: left;
+    width: 0.54rem;
+    height: 0.72rem;
+    font-size: 0.68rem;
+    line-height:  0.72rem;
+    margin-right:  0.16rem;
+    text-align: center;
+    color: #cefffa;
+    background-color: #949fa84d;
+}
+.chart_number_item.empty_num{
+    color: #7b8684b3;
+}
+
+.chart_number_item.doted{
+    background-color: transparent;
+    width: 0.2rem;
+}
+.chart_number_item.dw{
+    line-height: 1.19rem;
+    font-size: 0.24rem;
+}
+.rs_one{
+    margin-bottom: 0.3rem;
+}
+.rs_one_item{
+    float: left;
+    height: 0.40rem;
+    line-height: 0.40rem;
+}
+.rs_item_num{
+    padding-right: 0.05rem;
+}
+
+.rs_item_l{
+    font-size: 0.22rem;
+    color: #fff;
+    padding-right: 0.2rem;
+}
+.rs_item_c{
+    width: 3rem;
+}
+.rs_item_r{
+    font-size: 0.22rem;
+    color: #02a2cd;
+    padding-left: 0.2rem;
+}
+.rs_icon_item{
+    float: left;
+    width: calc(2rem - 2px);
+    height: 2rem;
+    padding:0.15rem;
+    text-align: center;
+    margin-bottom: 0.2rem;
+}
+.rs_icon_item_img img{
+    height: 50%;
+    width: 50%;
+    margin-bottom: 0.2rem;
+}
+.rs_icon_item_label{
+    color: #fff;
+    font-size: 0.2rem;
+    margin-bottom: 0.1rem;
+}
+.rs_icon_item_num{
+    font-size: 0.28rem;
+    color: #02a2cd;
+}
+.ybp,.lcs{
+    margin-bottom: 0.3rem;
+}
+.gz_icon_one{
+    margin-bottom: 0.3rem;
+}
+.gz_icon_item {
+    float: left;
+    width: 1.6rem;
+    height: 1.7rem;
+    margin-left: 0.2rem;
+    margin-right: 0.2rem;
+    background-color: #0c516980;
+    text-align: center;
+}
+.gz_icon_item_label{
+    font-size: 0.16rem;
+    padding-top: 0.15rem;
+    padding-bottom: 0.15rem;
+}
+.gz_icon_item_number{
+    font-size: 0.16rem;
+}
+.gz_icon_item_number .bilingbiling{
+    font-size: 0.48rem;
+}
+.gzzs{
+    color: #0393e9;
+}
+.ypds{
+    color: #ffcc01;
+}
+.ybxs{
+    color: #ff615e;
+}
+.wcls{
+    color: #9d64fc;
+}
+.ywcs{
+    color: #4fe6d7;
+}
+.yhls{
+    color: #f49918;
+}
+.gzzs .bilingbiling{
+    color:#87defe;
+    text-shadow:0 0 0.2em #0393e9,
+        -0 -0 0.2em #0393e9;
+}
+.ypds .bilingbiling{
+    color:#ffeb99;
+    text-shadow:0 0 0.2em #c6a01b,
+        -0 -0 0.2em #c6a01b;
+}
+.ybxs .bilingbiling{
+    color:#f19291;
+    text-shadow:0 0 0.2em #9e404f,
+        -0 -0 0.2em #9e404f;
+}
+.wcls .bilingbiling{
+    color:#d2b7ff;
+    text-shadow:0 0 0.2em #7134d7,
+        -0 -0 0.2em #7134d7;
+}
+.ywcs .bilingbiling{
+    color:#9afff5;
+    text-shadow:0 0 0.2em #4fe6d7,
+        -0 -0 0.2em #4fe6d7;
+}
+.yhls .bilingbiling{
+    color:#fecb82;
+    text-shadow:0 0 0.2em #f49918,
+        -0 -0 0.2em #f49918;
+}
