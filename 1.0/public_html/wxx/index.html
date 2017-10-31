@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>大屏幕监控</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../lib/Bootstrap/3.3.7/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../WbodyJS/css/common.css">
+        <style>
+            body{
+                font-size:50px;
+            }
+            .backgroup{
+                width: 1600px;
+                height: 900px;
+                background-image: url(back.png);
+                background-position: center;
+                background-size: cover;
+                background-repeat: no-repeat;
+                color: #fff;
+            }
+            .header_item{
+                float: left;
+            }
+            .header_l,.header_r{
+                width: 42.5%;
+                text-align: center;
+                background-position: center;
+                background-size: 80%;
+                background-repeat: no-repeat;
+            }
+            .header_l{
+                background-image: url(title_l.png);
+            }
+            .header_r{
+                background-image: url(title_r.png);
+            }
+            .header_c{
+                width: 15%;
+                text-align: center;
+                font-size: 1.875em;
+            }
+            .header{
+                font-size: 1.5em;
+                font-weight: 400;
+                padding: 10px;
+                line-height: 80px;
+            }
+            .body{
+                padding-left: 40px;
+                padding-right: 40px;
+            }
+            .chart_label{
+                color: #1dc4f1;
+            }
+        </style>
+    </head>
+    <body class="backgroup">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="header">
+                    <div class="header_item header_l">
+                        2017年10月29号，星期日
+                    </div>
+                    <div class="header_item header_c">
+                        台站监控中心
+                    </div>
+                    <div class="header_item header_r">
+                        上午10点28分45秒
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="body">
+                    <div class="body_item body_l">
+                        <div class="chart_instance">
+                            <div class="chart_label">台站</div>
+                            <div class="chart_body"></div>
+                        </div>
+                        <div class="chart_instance">
+                            <div class="chart_label">车</div>
+                            <div class="chart_body">
+                                <div class="chart_title">
+                                    实时里程数（当月）
+                                </div>
+                                <div class="chart_number">
+
+                                </div>
+                                <div class="chart_title">
+                                    实时里程数（当日）
+                                </div>
+                                <div class="chart_number">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="body_item body_c">
+                        2017年10月29号，星期日
+                    </div>
+                    <div class="body_item body_r">
+                        2017年10月29号，星期日
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

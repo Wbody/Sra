@@ -92,19 +92,21 @@
                 },
                 thead: {
                     isSra: true,
-                    dataOption: {
-                        dealer: function (data) {
-                            var object = {
-                                name: "姓名",
-                                sex: "性别",
-                                age: "年龄"
-                            };
-                            return object;
-                        }
+                    data: [],
+                    dataDealer: function (data) {
+                        var object = {
+                            name: "姓名",
+                            sex: "性别",
+                            age: "年龄"
+                        };
+                        return object;
                     }
                 },
                 tbody: {
                     isSra: true,
+                    fieldDealer: function (value, obj, column, field, fieldOption) {
+                        return value;
+                    },
                     fieldOption: ["name", "sex", "age"]
                 },
                 tfooter: {

@@ -119,7 +119,7 @@ function Plugin(pluginName) {
                                     protocol.style = style[attr];
                                     attrSra.set(style[attr]);
                                 }
-                                var sdata = protocol.sdata;
+                                var sdata = protocol.data;
 
                                 if (Validate.isUndefined(sdata)) {
                                     sdata = data;
@@ -141,28 +141,43 @@ function Plugin(pluginName) {
                                             fieldArr.push(i);
                                         }
                                     }
-                                }
-                                if (Validate.isEmpty(sdata)) {
-                                    attrSra.applyArr(fieldArr);
-                                } else {
-                                    if (Type.isArray(sdata)) {
-                                        attrSra.applyData(sdata, fieldArr);
+
+                                    if (Validate.isEmpty(sdata)) {
+                                        attrSra.applyArr(fieldArr);
                                     } else {
-                                        attrSra.applyJson(sdata, fieldArr);
+                                        if (Type.isArray(sdata)) {
+                                            attrSra.applyData(sdata, fieldArr);
+                                        } else {
+                                            attrSra.applyJson(sdata, fieldArr);
+                                        }
+                                    }
+
+                                } else {
+                                    if (Validate.isEmpty(sdata)) {
+                                        Log.debug("data为空无法渲染");
+                                        return false;
+                                    } else {
+                                        attrSra.applyJson(sdata);
                                     }
                                 }
-                                var gfieldDeaer = protocol.fieldDeaer;
+
+
+                                var gfieldDealer = protocol.fieldDealer;
                                 attrSra.setContainer(row)
                                         .initContainer()
                                         .initRows()
                                         .initColums(true, function (column, field, value, obj, row, context) {
                                             if (!Type.isArray(fieldOption)) {
-                                                var fieldDealer = fieldOption[field].dealer;
-                                                if (!Validate.isUndefined(fieldDealer)) {
-                                                    value = dealer.call(dealer, value, obj, column);
+                                                if (!Validate.isUndefined(fieldOption)) {
+                                                    var fieldDealer = fieldOption[field].dealer;
+                                                    if (!Validate.isUndefined(fieldDealer)) {
+                                                        value = dealer.call(dealer, value, obj, column, fieldOption[field]);
+                                                    }
                                                 }
                                             }
-                                            value = gfieldDeaer.call(gfieldDeaer, value, obj, column);
+                                            if (!Validate.isUndefined(gfieldDealer)) {
+                                                value = gfieldDealer.call(gfieldDealer, value, obj, column, field, fieldOption);
+                                            }
                                             if (!Validate.isEmpty(value)) {
                                                 $(column).append(value);
                                             }
