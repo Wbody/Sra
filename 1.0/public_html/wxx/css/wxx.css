@@ -2,14 +2,18 @@
     Created on : 2017-10-31, 20:01:29
     Author     : Wbody <2903056737@qq.com>
 */
-.backgroup{
+/*.backgroup{
     width: 32rem;
     height: 18rem;
     background-image: url(../image/back.png);
     background-position: center;
     background-size: 100% 100%;
     background-repeat: no-repeat;
-}
+}*/
+@font-face { 
+    font-family: LcdD; 
+    src: url(../fonts/Lcdd.ttf) format("truetype"); 
+} 
 .header{
     margin-left: auto;
     margin-right: auto;
@@ -72,9 +76,8 @@
     height: 100%;
 }
 .map{
-    width: 17rem;
+    width: 100%;
     height: 11.5rem;
-    border:1px solid #1dc4f14d;
     margin-bottom: 0.3rem;
 }
 .body_c_c_item{
@@ -96,20 +99,20 @@
 
 /*form样式 不包含宽高*/
 .border{
-    border: 0.01rem solid transparent;
+    border: 1px solid transparent;
 }
 .border_inline{
     border-top: 0 !important;
 }
 .border_b{
-    border: 0.01rem solid #1dc4fe;
+    border: 1px solid #1dc4fe;
     border-top: 0px !important;
 }
 .border_a{
-    border-top: 0.01rem solid #1dc4fe;
+    border-top: 1px solid #1dc4fe;
 }
 .form_label{
-    border-right: 0.01rem solid #1dc4fe;
+    border-right: 1px solid #1dc4fe;
     color: #008eff;
 }
 .EMPTY{
@@ -145,12 +148,12 @@
 .form_value img{
     width: 0.30rem;
 }
-.backgroup{
+/*.backgroup{
     background-image: url(../image/back.png);
     background-position: center;
     background-size: auto;
     background-repeat: no-repeat;
-}
+}*/
 .col-xs-12{
     width: 100% !important;
 }
@@ -262,6 +265,7 @@
 .chart_number_item.dw{
     line-height: 1.19rem;
     font-size: 0.24rem;
+    background-color: transparent;
 }
 .rs_one{
     margin-bottom: 0.3rem;
@@ -319,7 +323,7 @@
 }
 .gz_icon_item {
     float: left;
-    width: 1.6rem;
+    width: 1.5rem;
     height: 1.7rem;
     margin-left: 0.2rem;
     margin-right: 0.2rem;
