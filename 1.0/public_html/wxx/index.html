@@ -11,6 +11,9 @@
             html{
                 font-size: 100px;
             }
+            .anchorBL{
+                display: none;
+            }
         </style>
     </head>
     <body>
@@ -205,7 +208,7 @@
                             </div>
                         </div>
                         <div class="body_item body_c">
-                            <div class="map">
+                            <div class="map" id="map">
 
                             </div>
                             <div class="body_c_c">
@@ -288,8 +291,11 @@
         <script type="text/javascript" src="../WbodyJS/common.js"></script>
         <script type="text/javascript" src="../sra/Sra.js"></script>
         <script type="text/javascript" src="../sra/Incubator.js"></script>
-        <script type="text/javascript" src="http://cdn.bootcss.com/echarts/3.4.0/echarts.min.js"></script>
         <script type="text/javascript" src="option.js"></script>
+
+        <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=IuStA3X5pxqWDcr5nV0DEaC337Z1hzCg"></script>
+        <script type="text/javascript" src="https://cdn.bootcss.com/echarts/3.7.2/echarts.min.js"></script>
+        <script type="text/javascript" src=" https://cdn.bootcss.com/echarts/3.7.2/extension/bmap.min.js"></script>
         <script>
             var data = {
                 tz: "M1234",
@@ -357,128 +363,7 @@
                     cwlx: "设备故障",
                     pdzt: 1
                 }];
-            var style1 = {
-                main: {
-                    css: {
-                        row: "text-center"
-                    },
-                    elements: {
-                        container: "div",
-                        row: "div",
-                        column: "div"
-                    }
-                },
-                thead: {
-                    css: {
-                        container: "table_thead fixed-table",
-                        row: "overflow-hidden",
-                        column: "text-center table_column line-label"
-                    },
-                    elements: {
-                        row: "div",
-                        column: "div"
-                    }
-                },
-                tbody: {
-                    css: {
-                        container: "fixed-table-body",
-                        row: "overflow-hidden border table_body",
-                        column: "text-center table_column table_body_column line-label"
-                    },
-                    elements: {
-                        row: "div",
-                        column: "div"
-                    }
-                }
-            };
-            var tableSetting3 = {
-                thead: {
-                    isSra: true,
-                    dataDealer: function () {
-                        return {
-                            NO: "序号",
-                            tz: "台站号",
-                            tzm: "台站名",
-                            cwxx: "错误信息",
-                            jcsj: "发生时间",
-                            cwlx: "错误类型"
-                        };
-                    },
-                    fieldDealer: function (value, obj, column, field, fieldOption) {
-                        var p = fieldOption[field].persent;
-                        var size = Math.floor(p / 12 * 100);
-                        $(column).css("width", size + "%").append(value);
-                    },
-                    fieldOption: {
-                        NO: {
-                            name: "序号",
-                            persent: 1
-                        },
-                        tz: {
-                            name: "台站号",
-                            persent: 2
-                        },
-                        tzm: {
-                            name: "台站名",
-                            persent: 2
-                        },
-                        cwxx: {
-                            name: "错误信息",
-                            persent: 3
-                        },
-                        jcsj: {
-                            name: "发生时间",
-                            persent: 2
-                        },
-                        cwlx: {
-                            name: "错误类型",
-                            persent: 2
-                        }
-                    }
-                },
-                tbody: {
-                    isSra: true,
-                    fieldDealer: function (value, obj, column, field, fieldOption) {
-                        if (field === "NO") {
-                            value = parseInt(WUtil.getData(column, "row")) + 1;
-                            if (obj.pdzt === 1) {
-                                $(column).addClass("table_body_column_ypd");
-                            } else {
-                                $(column).addClass("table_body_column_wpd");
-                            }
-                        }
-                        var p = fieldOption[field].persent;
-                        var size = Math.floor(p / 12 * 100);
-                        $(column).css("width", size + "%").append(value);
-                    },
-                    fieldOption: {
-                        NO: {
-                            name: "序号",
-                            persent: 1
-                        },
-                        tz: {
-                            name: "台站号",
-                            persent: 2
-                        },
-                        tzm: {
-                            name: "台站名",
-                            persent: 2
-                        },
-                        cwxx: {
-                            name: "错误信息",
-                            persent: 3
-                        },
-                        jcsj: {
-                            name: "发生时间",
-                            persent: 2
-                        },
-                        cwlx: {
-                            name: "错误类型",
-                            persent: 2
-                        }
-                    }
-                }
-            };
+
             $(document).ready(function () {
                 var table = new Plugin("form");
                 table.protocol(["title", "tbody"], tableSetting).set("#form", style).apply(data);
@@ -494,7 +379,36 @@
 
                 var table3 = new Plugin("table");
                 table3.protocol(["thead", "tbody"], tableSetting3).set("#table", style1).apply(json);
+
+                initMap();
+
             });
+
+            var points = [
+                {name: '海门', x: 121.15, y: 31.89, sfpd: 0},
+                {name: '鄂尔多斯', x: 109.781327, y: 39.608266, sfpd: 1}
+            ];
+            function initMap() {
+                var myChart = echarts.init(document.getElementById('map'));
+                myChart.setOption(getMap(points));
+                var bmap = myChart.getModel().getComponent('bmap').getBMap();
+                bmap.setMapStyle(mapStyle);
+                bmap.addControl(new BMap.MapTypeControl({
+                    mapTypes: [BMAP_NORMAL_MAP, BMAP_SATELLITE_MAP, BMAP_HYBRID_MAP]
+                }));
+//                bmap.addControl(new BMap.CityListControl({
+//                    anchor: BMAP_ANCHOR_TOP_LEFT,
+//                    offset: 10
+//                }));
+                bmap.addTileLayer(new BMap.PanoramaCoverageLayer());
+
+                var stCtrl = new BMap.PanoramaControl(); //构造全景控件
+                stCtrl.setOffset(new BMap.Size(20, 80));
+                bmap.addControl(stCtrl);//添加全景控件
+                bmap.addEventListener("addtilelayer", function (e) {
+                    bmap.setMapType(BMAP_HYBRID_MAP);
+                });
+            }
 
 
 
@@ -508,6 +422,8 @@
                 myChart = echarts.init(document.getElementById('gzcxsj'));
                 myChart.setOption(getYBP("#9e56f0", "#012a59", 70, "平均故障持续时间", fontSize));
             }
+
+
             function initRs() {
                 var fontSize = parseInt($("html").css("font-size"));
                 var height = fontSize * 0.2;
@@ -525,9 +441,7 @@
                 var height = fontSize;
                 var myChart = echarts.init(document.getElementById('rose'));
                 myChart.setOption(getRose(height));
-
             }
-
         </script>
     </body>
 </html>

@@ -1,3 +1,5 @@
+/* global WUtil */
+
 function getYBP(mcolor, acolor, value, name, fontSize) {
     var ybp = {
         calculable: true,
@@ -513,6 +515,243 @@ var tableSetting2 = {
             },
             xdczt: {
                 name: "蓄电池端状"
+            }
+        }
+    }
+};
+function getMap(points) {
+    var convertData = function (points) {
+        var res = [];
+        for (var i = 0; i < points.length; i++) {
+            var point = points[i];
+            var arr = [];
+            arr[0] = point.x;
+            arr[1] = point.y;
+            arr[2] = 1;
+            var sfpd = Number(point.sfpd);
+            var color = "#ccc21f";
+            if (sfpd === 0) {
+                color = "#d83838";
+            }
+            res.push({
+                name: point.name,
+                value: arr,
+                itemStyle: {
+                    normal: {
+                        color: color,
+                        shadowBlur: 10,
+                        shadowColor: '#333'
+                    }
+                }
+            });
+        }
+        return res;
+    };
+    var option = {
+        bmap: {
+            center: [121.15, 31.89],
+            zoom: 5,
+            roam: true
+        },
+        series: [{
+                type: 'effectScatter',
+                coordinateSystem: 'bmap',
+                data: convertData(points),
+                symbolSize: function (val) {
+                    return 40;
+                },
+                showEffectOn: 'render',
+                rippleEffect: {
+                    brushType: 'stroke'
+                },
+                hoverAnimation: true,
+                label: {
+                    normal: {
+                        formatter: '{b}',
+                        position: 'right',
+                        show: true
+                    }
+                },
+                zlevel: 0
+            }]
+    };
+    return option;
+}
+var mapStyle = {
+    styleJson: [
+        {
+            "featureType": "highway", //高速及国道
+            "elementType": "all",
+            "stylers": {
+                "visibility": "off"
+            }
+        }, {
+            "featureType": "arterial", //城市及主路
+            "elementType": "all",
+            "stylers": {
+                "visibility": "on"
+            }
+        }, {
+            "featureType": "local", //普通道路
+            "elementType": "all",
+            "stylers": {
+                "visibility": "on"
+            }
+        }, {
+            "featureType": "railway", //铁路
+            "elementType": "all",
+            "stylers": {
+                "visibility": "off"
+            }
+        },
+        {
+            "featureType": "subway", //地铁
+            "elementType": "all",
+            "stylers": {
+                "visibility": "off"
+            }
+        },
+        {
+            "featureType": "poi", //兴趣点
+            "elementType": "all",
+            "stylers": {
+                "visibility": "off"
+            }
+        },
+        {
+            "featureType": "label", //行政标注
+            "elementType": "all",
+            "stylers": {
+                "visibility": "on"
+            }
+        },
+        {
+            "featureType": "boundary", //边界线
+            "elementType": "all",
+            "stylers": {
+                "visibility": "on"
+            }
+        }
+    ]
+};
+var style1 = {
+    main: {
+        css: {
+            row: "text-center"
+        },
+        elements: {
+            container: "div",
+            row: "div",
+            column: "div"
+        }
+    },
+    thead: {
+        css: {
+            container: "table_thead fixed-table",
+            row: "overflow-hidden",
+            column: "text-center table_column line-label"
+        },
+        elements: {
+            row: "div",
+            column: "div"
+        }
+    },
+    tbody: {
+        css: {
+            container: "fixed-table-body",
+            row: "overflow-hidden border table_body",
+            column: "text-center table_column table_body_column line-label"
+        },
+        elements: {
+            row: "div",
+            column: "div"
+        }
+    }
+};
+var tableSetting3 = {
+    thead: {
+        isSra: true,
+        dataDealer: function () {
+            return {
+                NO: "序号",
+                tz: "台站号",
+                tzm: "台站名",
+                cwxx: "错误信息",
+                jcsj: "发生时间",
+                cwlx: "错误类型"
+            };
+        },
+        fieldDealer: function (value, obj, column, field, fieldOption) {
+            var p = fieldOption[field].persent;
+            var size = Math.floor(p / 12 * 100);
+            $(column).css("width", size + "%").append(value);
+        },
+        fieldOption: {
+            NO: {
+                name: "序号",
+                persent: 1
+            },
+            tz: {
+                name: "台站号",
+                persent: 2
+            },
+            tzm: {
+                name: "台站名",
+                persent: 2
+            },
+            cwxx: {
+                name: "错误信息",
+                persent: 3
+            },
+            jcsj: {
+                name: "发生时间",
+                persent: 2
+            },
+            cwlx: {
+                name: "错误类型",
+                persent: 2
+            }
+        }
+    },
+    tbody: {
+        isSra: true,
+        fieldDealer: function (value, obj, column, field, fieldOption) {
+            if (field === "NO") {
+                value = parseInt(WUtil.getData(column, "row")) + 1;
+                if (obj.pdzt === 1) {
+                    $(column).addClass("table_body_column_ypd");
+                } else {
+                    $(column).addClass("table_body_column_wpd");
+                }
+            }
+            var p = fieldOption[field].persent;
+            var size = Math.floor(p / 12 * 100);
+            $(column).css("width", size + "%").append(value);
+        },
+        fieldOption: {
+            NO: {
+                name: "序号",
+                persent: 1
+            },
+            tz: {
+                name: "台站号",
+                persent: 2
+            },
+            tzm: {
+                name: "台站名",
+                persent: 2
+            },
+            cwxx: {
+                name: "错误信息",
+                persent: 3
+            },
+            jcsj: {
+                name: "发生时间",
+                persent: 2
+            },
+            cwlx: {
+                name: "错误类型",
+                persent: 2
             }
         }
     }
