@@ -181,7 +181,7 @@ function getRose(width) {
                         name: '预警',
                         itemStyle: {
                             normal: {
-                                color: "rgba(29,196,241,0.3)"
+                                color: "#51abff"
                             }
                         }
                     },
@@ -190,7 +190,7 @@ function getRose(width) {
                         name: '正常',
                         itemStyle: {
                             normal: {
-                                color: "#51abff"
+                                color: "rgba(29,196,241,0.3)"
                             }
                         }
                     }
