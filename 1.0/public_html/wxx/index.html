@@ -9,51 +9,8 @@
         <link rel="stylesheet" href="css/wxx.css">
         <style>
             html{
-                font-size: 50px;
+                font-size: 100px;
             }
-            .body_c_c_c{
-                border: 1px solid #87defe;
-                margin-left: 0.3rem;
-                margin-right: 0.3rem;
-                padding: 0.1rem;
-                overflow-y: scroll;
-                overflow-x: hidden;
-            }
-            .body_c_c_item {
-                height: 3.7rem;
-            }
-            .table_column{
-                float: left;
-                color: #feffff;
-                font-size: 0.18rem;
-                height: 0.4rem;
-                line-height: 0.4rem;
-                padding-left: 0.1rem;
-                padding-right: 0.1rem;
-            }
-            .table_body_column{
-                color: #c9f4ff;
-                font-size: 0.16rem;
-            }
-            .table_thead{
-                background-color: #1dc4f166;
-            }
-            .fixed-table{
-                position: absolute;
-                margin-top: 0;
-                width: calc(6.6rem - 1em);
-            }
-            .fixed-table-body{
-                padding-top: 0.5rem;
-                width: calc(6.6rem - 1em);
-            }
-            .table_body{
-                background-color: #0c516966;
-            }
-            .table_body{
-                margin-bottom: 0.1rem;
-            }
-
         </style>
     </head>
     <body>
@@ -350,7 +307,15 @@
                     tzm: "长安站",
                     cwxx: "雨量:空间一致性判断：错误数据（无降水产生雨量）; ",
                     jcsj: "09:30:00",
-                    cwlx: "设备故障"
+                    cwlx: "设备故障",
+                    pdzt: 1
+                }, {
+                    tz: "M1234",
+                    tzm: "长安站",
+                    cwxx: "雨量:空间一致性判断：错误数据（无降水产生雨量）; ",
+                    jcsj: "09:30:00",
+                    cwlx: "设备故障",
+                    pdzt: 1
                 }, {
                     tz: "M1234",
                     tzm: "长安站",
@@ -362,7 +327,8 @@
                     tzm: "长安站",
                     cwxx: "雨量:空间一致性判断：错误数据（无降水产生雨量）; ",
                     jcsj: "09:30:00",
-                    cwlx: "设备故障"
+                    cwlx: "设备故障",
+                    pdzt: 0
                 }, {
                     tz: "M1234",
                     tzm: "长安站",
@@ -374,25 +340,22 @@
                     tzm: "长安站",
                     cwxx: "雨量:空间一致性判断：错误数据（无降水产生雨量）; ",
                     jcsj: "09:30:00",
-                    cwlx: "设备故障"
+                    cwlx: "设备故障",
+                    pdzt: 1
                 }, {
                     tz: "M1234",
                     tzm: "长安站",
                     cwxx: "雨量:空间一致性判断：错误数据（无降水产生雨量）; ",
                     jcsj: "09:30:00",
-                    cwlx: "设备故障"
+                    cwlx: "设备故障",
+                    pdzt: 0
                 }, {
                     tz: "M1234",
                     tzm: "长安站",
                     cwxx: "雨量:空间一致性判断：错误数据（无降水产生雨量）; ",
                     jcsj: "09:30:00",
-                    cwlx: "设备故障"
-                }, {
-                    tz: "M1234",
-                    tzm: "长安站",
-                    cwxx: "雨量:空间一致性判断：错误数据（无降水产生雨量）; ",
-                    jcsj: "09:30:00",
-                    cwlx: "设备故障"
+                    cwlx: "设备故障",
+                    pdzt: 1
                 }];
             var style1 = {
                 main: {
@@ -478,6 +441,11 @@
                     fieldDealer: function (value, obj, column, field, fieldOption) {
                         if (field === "NO") {
                             value = parseInt(WUtil.getData(column, "row")) + 1;
+                            if (obj.pdzt === 1) {
+                                $(column).addClass("table_body_column_ypd");
+                            } else {
+                                $(column).addClass("table_body_column_wpd");
+                            }
                         }
                         var p = fieldOption[field].persent;
                         var size = Math.floor(p / 12 * 100);
