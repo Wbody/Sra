@@ -297,9 +297,14 @@
 
         <!--下面为接口渲染插件-->
         <script type="text/javascript" src="../WbodyJS/common.js"></script>
+        <script type="text/javascript" src="../WbodyJS/EasyAjax.js"></script>
+        <script type="text/javascript" src="../WbodyJS/WLayer.js"></script>
+        <script type="text/javascript" src="../WbodyJS/Process.js"></script>
+        
         <script type="text/javascript" src="../sra/Sra.js"></script>
         <script type="text/javascript" src="../sra/Incubator.js"></script>
         <script type="text/javascript" src="option.js"></script>
+
 
         <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=IuStA3X5pxqWDcr5nV0DEaC337Z1hzCg"></script>
         <script type="text/javascript" src="https://cdn.bootcss.com/echarts/3.7.2/echarts.min.js"></script>
@@ -372,7 +377,32 @@
                     pdzt: 1
                 }];
 
+
+            var username;
+            var password;
+            var zone;
+            var server = "http://www.wxqxbz.cn:9017";
+            function initParam() {
+                username = WUtil.getParameter("username");
+                password = WUtil.getParameter("password");
+                zone = WUtil.getParameter("zone");
+                if (!username) {
+                    username = "ad";
+                } else {
+                    server = "";
+                }
+                if (!password) {
+                    password = "js1959";
+                }
+                if (!zone) {
+                    zone = 26;
+                }
+            }
+
+
+
             $(document).ready(function () {
+                initParam();
                 var table = new Plugin("form");
                 table.protocol(["title", "tbody"], tableSetting).set("#form", style).apply(data);
 
@@ -385,8 +415,34 @@
                 initRs();
                 initRose();
 
+                var dcjax = new EasyAjax();
+                dcjax.set({
+                    async: true,
+                    dataType: "text",
+                    url: server + "/acc/servlet/FuncServlet",
+                    params: {
+                        clientid: 101,
+                        username: username,
+                        password: password,
+                        requeststr: "&bzdw1=" + zone,
+                        repid: 242845,
+                        functype: 10
+                    },
+                    dataDealer: function (data, ext) {
+                        try {
+                            data = JSON.parse(data);
+                            alert(data);
+                        } catch (e) {
+                            alert(data);
+                        }
+                        return data;
+                    }
+                }).biu();
+
+
                 var table3 = new Plugin("table");
                 table3.protocol(["thead", "tbody"], tableSetting3).set("#table", style1).apply(json);
+
 
                 initMap();
 
@@ -407,15 +463,15 @@
 //                bmap.addControl(new BMap.CityListControl({
 //                    anchor: BMAP_ANCHOR_TOP_LEFT,
 //                    offset: 10
-//                }));
+                //                }));
                 bmap.addTileLayer(new BMap.PanoramaCoverageLayer());
 
                 var stCtrl = new BMap.PanoramaControl(); //构造全景控件
                 stCtrl.setOffset(new BMap.Size(20, 80));
                 bmap.addControl(stCtrl);//添加全景控件
-                bmap.addEventListener("addtilelayer", function (e) {
-                    bmap.setMapType(BMAP_HYBRID_MAP);
-                });
+//                bmap.addEventListener("addtilelayer", function (e) {
+//                    bmap.setMapType(BMAP_HYBRID_MAP);
+                //                });
             }
 
 
