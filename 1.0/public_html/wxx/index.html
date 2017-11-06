@@ -43,7 +43,7 @@
                         <div class="body_item body_l">
                             <div class="ybp">
                                 <div class="chart_title">
-                                    <img src="image/tz.png"/>台站
+                                    <img src="image/台站.png"/>台站
                                 </div>
                                 <div class="ybp_item ybp_item_l" id="xysj"></div>
                                 <div class="ybp_item ybp_item_c" id="gzwxsj"></div>
@@ -53,10 +53,10 @@
 
                             <div class="lcs">
                                 <div class="chart_title">
-                                    <img src="image/che.png"/>车
+                                    <img src="image/车.png"/>车
                                 </div>
                                 <div class="chart_label">实时里程数（当月）</div>
-                                <div class="chart_number">
+                                <div class="chart_number" id="ysslcs">
                                     <div class="chart_number_item">
                                         1
                                     </div>
@@ -87,7 +87,7 @@
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="chart_label">实时里程数（当日）</div>
-                                <div class="chart_number">
+                                <div class="chart_number" id="rsslcs">
                                     <div class="chart_number_item empty_num">
                                         0
                                     </div>
@@ -121,13 +121,13 @@
 
                             <div class="rs">
                                 <div class="chart_title">
-                                    <img src="image/r.png"/>人
+                                    <img src="image/人.png"/>人
                                 </div>
                                 <div class="rs_one">
                                     <div class="rs_one_item rs_item_l">当天待命人数</div>
                                     <div class="rs_one_item rs_item_c" id="dtdmrs" ></div>
                                     <div class="rs_one_item rs_item_r">
-                                        <span class="rs_item_num" >203</span>
+                                        <span class="rs_item_num" ></span>
                                         <span>个</span>
                                     </div>
                                     <div class="clearfix"></div>
@@ -136,7 +136,7 @@
                                     <div class="rs_one_item rs_item_l">未签到人数</div>
                                     <div class="rs_one_item rs_item_c" id="wcdrs" ></div>
                                     <div class="rs_one_item rs_item_r">
-                                        <span class="rs_item_num" >45</span>
+                                        <span class="rs_item_num" ></span>
                                         <span>个</span>
                                     </div>
                                     <div class="clearfix"></div>
@@ -145,7 +145,7 @@
                                     <div class="rs_one_item rs_item_l">现场作业人数</div>
                                     <div class="rs_one_item rs_item_c" id="xczyrs" ></div>
                                     <div class="rs_one_item rs_item_r">
-                                        <span class="rs_item_num" >99</span>
+                                        <span class="rs_item_num" ></span>
                                         <span>个</span>
                                     </div>
                                     <div class="clearfix"></div>
@@ -154,7 +154,7 @@
                                     <div class="rs_one_item rs_item_l">在途中人数</div>
                                     <div class="rs_one_item rs_item_c" id="ztzrs" ></div>
                                     <div class="rs_one_item rs_item_r">
-                                        <span class="rs_item_num" >45</span>
+                                        <span class="rs_item_num" ></span>
                                         <span>个</span>
                                     </div>
                                     <div class="clearfix"></div>
@@ -165,17 +165,17 @@
                                     <div class="rs_icon_item">
                                         <div class="rs_icon_item_img"><img src="image/专业保障人员.png"/></div>
                                         <div class="rs_icon_item_label">专业保障人员</div>
-                                        <div class="rs_icon_item_num">203 个</div>
+                                        <div class="rs_icon_item_num" id="zybzry"></div>
                                     </div>
                                     <div class="rs_icon_item">
                                         <div class="rs_icon_item_img"><img src="image/累计巡检.png"/></div>
                                         <div class="rs_icon_item_label">累计巡检</div>
-                                        <div class="rs_icon_item_num">203 个</div>
+                                        <div class="rs_icon_item_num" id="ljxj"></div>
                                     </div>
                                     <div class="rs_icon_item">
                                         <div class="rs_icon_item_img"><img src="image/累计抢修.png"/></div>
                                         <div class="rs_icon_item_label">累计抢修</div>
-                                        <div class="rs_icon_item_num">203 个</div>
+                                        <div class="rs_icon_item_num"  id="ljqx"></div>
                                     </div>
                                     <div class="clearfix"></div>
                                 </div>
@@ -183,17 +183,17 @@
                                     <div class="rs_icon_item">
                                         <div class="rs_icon_item_img"><img src="image/更换配件.png"/></div>
                                         <div class="rs_icon_item_label">更换配件</div>
-                                        <div class="rs_icon_item_num">203 个</div>
+                                        <div class="rs_icon_item_num" id="ghpj"></div>
                                     </div>
                                     <div class="rs_icon_item">
                                         <div class="rs_icon_item_img"><img src="image/计量检定.png"/></div>
                                         <div class="rs_icon_item_label">计量检定</div>
-                                        <div class="rs_icon_item_num">203 个</div>
+                                        <div class="rs_icon_item_num" id="jljd"></div>
                                     </div>
                                     <div class="rs_icon_item">
                                         <div class="rs_icon_item_img"><img src="image/保障里程.png"/></div>
                                         <div class="rs_icon_item_label">保障里程</div>
-                                        <div class="rs_icon_item_num">203 个</div>
+                                        <div class="rs_icon_item_num" id="bzlc"></div>
                                     </div>
                                     <div class="clearfix"></div>
                                 </div>     
@@ -202,12 +202,12 @@
                                     <div class="rs_icon_item">
                                         <div class="rs_icon_item_img"><img src="image/培训考试.png"/></div>
                                         <div class="rs_icon_item_label">培训考试</div>
-                                        <div class="rs_icon_item_num">203 个</div>
+                                        <div class="rs_icon_item_num" id="pxks"></div>
                                     </div>
                                     <div class="rs_icon_item">
                                         <div class="rs_icon_item_img"><img src="image/最快响应.png"/></div>
                                         <div class="rs_icon_item_label">最快响应</div>
-                                        <div class="rs_icon_item_num">203 个</div>
+                                        <div class="rs_icon_item_num" id="zkxysj"></div>
                                     </div>
                                     <div class="clearfix"></div>
                                 </div>
@@ -300,7 +300,7 @@
         <script type="text/javascript" src="../WbodyJS/EasyAjax.js"></script>
         <script type="text/javascript" src="../WbodyJS/WLayer.js"></script>
         <script type="text/javascript" src="../WbodyJS/Process.js"></script>
-        
+
         <script type="text/javascript" src="../sra/Sra.js"></script>
         <script type="text/javascript" src="../sra/Incubator.js"></script>
         <script type="text/javascript" src="option.js"></script>
@@ -381,7 +381,7 @@
             var username;
             var password;
             var zone;
-            var server = "http://www.wxqxbz.cn:9017";
+            var server = "http://192.168.3.100:9017";
             function initParam() {
                 username = WUtil.getParameter("username");
                 password = WUtil.getParameter("password");
@@ -392,29 +392,21 @@
                     server = "";
                 }
                 if (!password) {
-                    password = "js1959";
+                    password = "123456";
                 }
                 if (!zone) {
-                    zone = 26;
+                    zone = 3;
                 }
             }
 
 
-
+            var setting = new Object();
             $(document).ready(function () {
                 initParam();
-                var table = new Plugin("form");
-                table.protocol(["title", "tbody"], tableSetting).set("#form", style).apply(data);
 
-                var table1 = new Plugin("form");
-                table1.protocol(["title", "tbody"], tableSetting1).set("#form", style).apply(data);
-
-                var table2 = new Plugin("form");
-                table2.protocol(["title", "tbody"], tableSetting2).set("#form", style).apply(data);
                 initYBP();
-                initRs();
-                initRose();
 
+                initRose();
                 var dcjax = new EasyAjax();
                 dcjax.set({
                     async: true,
@@ -425,28 +417,71 @@
                         username: username,
                         password: password,
                         requeststr: "&bzdw1=" + zone,
-                        repid: 242845,
+                        repid: 252580,
                         functype: 10
                     },
                     dataDealer: function (data, ext) {
-                        try {
-                            data = JSON.parse(data);
-                            alert(data);
-                        } catch (e) {
-                            alert(data);
+                        data = JSON.parse(data);
+                        data = data.datalist;
+                        for (var i  in data) {
+                            var item = data[i];
+                            var skey = item.skey;
+                            setting[skey] = item.svalue;
                         }
+                        initRs(setting);
+                        initGS(setting);
+                        addTimer(function () {
+                            initLCS(setting.dylcs, '#ysslcs');
+                            initLCS(setting.drlcs, '#rsslcs');
+                        });
                         return data;
                     }
                 }).biu();
 
-
                 var table3 = new Plugin("table");
                 table3.protocol(["thead", "tbody"], tableSetting3).set("#table", style1).apply(json);
 
+                var table = new Plugin("form");
+                table.protocol(["title", "tbody"], tableSetting).set("#form", style).apply(data);
 
+                var table1 = new Plugin("form");
+                table1.protocol(["title", "tbody"], tableSetting1).set("#form", style).apply(data);
+
+                var table2 = new Plugin("form");
+                table2.protocol(["title", "tbody"], tableSetting2).set("#form", style).apply(data);
                 initMap();
 
             });
+            function addTimer(fuc) {
+
+            }
+            function initLCS(lcs, target) {
+                $(target).empty();
+                lcs = Number(lcs).toFixed(2);
+                var zs = lcs.substring(0, lcs.indexOf("."));
+                var xs = lcs.substring(lcs.indexOf(".") + 1, lcs.length);
+                zs = WUtil.PrefixInteger(zs, 4);
+                for (var i in zs) {
+                    var div = $('<div>').addClass("chart_number_item");
+                    if (zs[i] === '0') {
+                        $(div).addClass("empty_num");
+                    }
+                    $(div).text(zs[i]).appendTo(target);
+                }
+                var clazz = "";
+                if (Number(zs) === 0) {
+                    clazz = "empty_num";
+                }
+                var dotdiv = $('<div>').addClass("chart_number_item");
+                $(dotdiv).addClass("dot").addClass(clazz).text(".").appendTo(target);
+                for (var m in xs) {
+                    var div = $('<div>').addClass("chart_number_item").addClass(clazz);
+                    $(div).text(xs[m]).appendTo(target);
+                }
+                var dw = $('<div>').addClass("chart_number_item").addClass(clazz);
+                $(dw).addClass("dw").text('公里').appendTo(target);
+                $(target).append($("<div class='clearfix'></div>"));
+            }
 
             var points = [
                 {name: '海门', x: 121.15, y: 31.89, sfpd: 0},
@@ -460,18 +495,11 @@
                 bmap.addControl(new BMap.MapTypeControl({
                     mapTypes: [BMAP_NORMAL_MAP, BMAP_SATELLITE_MAP, BMAP_HYBRID_MAP]
                 }));
-//                bmap.addControl(new BMap.CityListControl({
-//                    anchor: BMAP_ANCHOR_TOP_LEFT,
-//                    offset: 10
-                //                }));
                 bmap.addTileLayer(new BMap.PanoramaCoverageLayer());
 
                 var stCtrl = new BMap.PanoramaControl(); //构造全景控件
                 stCtrl.setOffset(new BMap.Size(20, 80));
                 bmap.addControl(stCtrl);//添加全景控件
-//                bmap.addEventListener("addtilelayer", function (e) {
-//                    bmap.setMapType(BMAP_HYBRID_MAP);
-                //                });
             }
 
 
@@ -487,18 +515,32 @@
                 myChart.setOption(getYBP("#9e56f0", "#012a59", 70, "平均故障持续时间", fontSize));
             }
 
+            function initGS(s) {
+                $("#zybzry").text(s.zybzry + " 个");
+                $("#ljqx").text(s.ljqx + " 个");
+                $("#ghpj").text(s.ghpj + " 个");
+                $("#ljxj").text(s.ljxj + " 个");
+                $("#pxks").text(s.pxks + " 个");
+                $("#zkxysj").text(s.zkxysj + " 分");
+                $("#jljd").text(s.jljd + " 个");
+                $("#bzlc").text(Number(s.bzlc).toFixed(2) + " 里").css("font-size", "0.20rem");
+            }
 
-            function initRs() {
+            function initRs(rs) {
                 var fontSize = parseInt($("html").css("font-size"));
                 var height = fontSize * 0.2;
                 var myChart = echarts.init(document.getElementById('dtdmrs'));
-                myChart.setOption(getRS(0.25, height));
+                myChart.setOption(getRS(Number(rs.dmrs) / Number(rs.zrs), height));
+                $("#dtdmrs").parent().find(".rs_item_num").text(Number(rs.dmrs));
                 myChart = echarts.init(document.getElementById('wcdrs'));
-                myChart.setOption(getRS(0.45, height));
+                myChart.setOption(getRS(Number(rs.wqdrs) / Number(rs.zrs), height));
+                $("#wcdrs").parent().find(".rs_item_num").text(Number(rs.wqdrs));
                 myChart = echarts.init(document.getElementById('xczyrs'));
-                myChart.setOption(getRS(0.75, height));
+                myChart.setOption(getRS(Number(rs.xczyrs) / Number(rs.zrs), height));
+                $("#xczyrs").parent().find(".rs_item_num").text(Number(rs.xczyrs));
                 myChart = echarts.init(document.getElementById('ztzrs'));
-                myChart.setOption(getRS(0.15, height));
+                myChart.setOption(getRS(Number(rs.tzrs) / Number(rs.zrs), height));
+                $("#ztzrs").parent().find(".rs_item_num").text(Number(rs.tzrs));
             }
             function initRose() {
                 var fontSize = parseInt($("html").css("font-size"));
@@ -508,7 +550,7 @@
             }
         </script>
         <script>
-//宇宙特效
+            //宇宙特效
             "use strict";
             var fontSize = parseInt($("html").css("font-size"));
             var canvas = document.getElementById('canvas'),

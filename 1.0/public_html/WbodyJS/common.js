@@ -1,6 +1,3 @@
-String.prototype.replaceAll = function (s1, s2) {
-    return this.replace(new RegExp(s1, "gm"), s2);
-};
 var WUtil = new Object();
 WUtil.generateUUID = function (flag) {
     var d = new Date().getTime();
@@ -10,9 +7,12 @@ WUtil.generateUUID = function (flag) {
         return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
     });
     if (flag) {
-        uuid = uuid.replaceAll("-", "");
+        uuid = WUtil.replaceAll(uuid, "-", "");
     }
     return uuid;
+};
+WUtil.replaceAll = function (uuid,s1, s2) {
+    return uuid.replace(new RegExp(s1, "gm"), s2);
 };
 WUtil.data = function (o, key, value) {
     $(o).attr("data-" + key, value);
@@ -85,7 +85,31 @@ WUtil.getParameter = function (param) {
         return query.substring(iStart);
     return query.substring(iStart, iEnd);
 };
-
+//从obj1中找obj的字段，isReplaceNull表示如果空字符串替不替换
+WUtil.initMode = function (obj, obj1, isReplaceNull, dealer) {
+    var object = new Object();
+    for (var i in obj) {
+        var attr = i;
+        var attrValue = obj[i];
+        var replaceValue = obj1[i];
+        if (replaceValue === "" && isReplaceNull) {
+            object[attr] = replaceValue;
+        } else {
+            if (!Validate.isEmpty(replaceValue)) {
+                if (dealer) {
+                    replaceValue = dealer.call(dealer, replaceValue);
+                }
+                object[attr] = replaceValue;
+            } else {
+                object[attr] = attrValue;
+            }
+        }
+    }
+    return object;
+};
+WUtil.PrefixInteger = function (num, n) {
+    return (Array(n).join(0) + num).slice(-n);
+};
 WUtil.random = function (m, n) {
     return parseInt(Math.random() * (n - m + 1) + m);
 };

@@ -1,4 +1,4 @@
-/* global WUtil, Log, Validate, WLayer */
+/* global WUtil, Log, Validate, WLayer, StrKit */
 
 var EasyAjaxConf = new Object();
 EasyAjaxConf.AJAX_POST_TYPE = "POST";
@@ -9,7 +9,7 @@ EasyAjaxConf.RES_WARNING = "WARN";
 EasyAjaxConf.RES_TOKEN_ERROR = "TOKEN_ERROR";
 EasyAjaxConf.ASYNC = false;
 EasyAjaxConf.notConnection = function (url, setting, dealer) {
-    var message = "连接异常url:({0})[{1},{2},{3}]".format(url, setting.type, setting.url, setting.async, setting.dataType);
+    var message = StrKit.format("连接异常url:(${1})[${2},${3},${4}]", url, setting.type, setting.url, setting.async, setting.dataType);
     Log.debug(message);
     if (dealer) {
         dealer.call(dealer, message);
