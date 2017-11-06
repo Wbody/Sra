@@ -1,5 +1,55 @@
-/* global WUtil */
+/* global WUtil, echarts, BMap, BMAP_SATELLITE_MAP, BMAP_NORMAL_MAP, BMAP_HYBRID_MAP */
+function addTimer(fuc, speed) {
+    return setInterval(fuc, speed);
+}
+function initMap(points) {
+    var myChart = echarts.init(document.getElementById('map'));
+    myChart.setOption(getMap(points));
+    var bmap = myChart.getModel().getComponent('bmap').getBMap();
+//    bmap.setMapStyle(mapStyle);
+    bmap.addControl(new BMap.MapTypeControl({
+        mapTypes: [BMAP_NORMAL_MAP, BMAP_SATELLITE_MAP, BMAP_HYBRID_MAP]
+    }));
+    bmap.addTileLayer(new BMap.PanoramaCoverageLayer());
 
+    var stCtrl = new BMap.PanoramaControl(); //构造全景控件
+    stCtrl.setOffset(new BMap.Size(20, 80));
+    bmap.addControl(stCtrl);//添加全景控件
+    bmap.addEventListener("addtilelayer", function (e) {
+        bmap.setMapType(BMAP_HYBRID_MAP);
+    });
+}
+function initLCS(lcs, target) {
+    $(target).empty();
+    lcs = Number(lcs).toFixed(2);
+    var zs = lcs.substring(0, lcs.indexOf("."));
+    var xs = lcs.substring(lcs.indexOf(".") + 1, lcs.length);
+    zs = WUtil.PrefixInteger(zs, 4);
+    var islt = false;
+    for (var i in zs) {
+        var div = $('<div>').addClass("chart_number_item");
+        if (Number(zs[i]) === 0 && !islt) {
+            $(div).addClass("empty_num");
+        } else {
+            islt = true;
+        }
+        $(div).text(zs[i]).appendTo(target);
+    }
+    var clazz = "";
+    if (Number(zs) === 0) {
+        clazz = "empty_num";
+    }
+    var dotdiv = $('<div>').addClass("chart_number_item");
+    $(dotdiv).addClass("dot").addClass(clazz).text(".").appendTo(target);
+    for (var m in xs) {
+        var div = $('<div>').addClass("chart_number_item").addClass(clazz);
+        $(div).text(xs[m]).appendTo(target);
+    }
+    var dw = $('<div>').addClass("chart_number_item").addClass(clazz);
+    $(dw).addClass("dw").text('公里').appendTo(target);
+    $(target).append($("<div class='clearfix'></div>"));
+    return lcs;
+}
 function getYBP(mcolor, acolor, value, name, fontSize) {
     var ybp = {
         calculable: true,
@@ -550,7 +600,7 @@ function getMap(points) {
     var option = {
         bmap: {
             center: [121.15, 31.89],
-            zoom: 5,
+            zoom: 10,
             roam: true
         },
         series: [{

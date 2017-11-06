@@ -20,6 +20,10 @@
             .chart_number_item{
                 font-family: LcdD;
             }
+            .Wlayer, .inlineWlayer {
+                z-index: 1001;
+                background-color: transparent;
+            }
         </style>
     </head>
     <body>
@@ -57,65 +61,9 @@
                                 </div>
                                 <div class="chart_label">实时里程数（当月）</div>
                                 <div class="chart_number" id="ysslcs">
-                                    <div class="chart_number_item">
-                                        1
-                                    </div>
-                                    <div class="chart_number_item">
-                                        3
-                                    </div>
-                                    <div class="chart_number_item">
-                                        0
-                                    </div>
-                                    <div class="chart_number_item">
-                                        5
-                                    </div>
-                                    <div class="chart_number_item">
-                                        0
-                                    </div>
-                                    <div class="chart_number_item doted">
-                                        .
-                                    </div>
-                                    <div class="chart_number_item">
-                                        2
-                                    </div>
-                                    <div class="chart_number_item">
-                                        1
-                                    </div>
-                                    <div class="chart_number_item dw">
-                                        公里
-                                    </div>
-                                    <div class="clearfix"></div>
                                 </div>
                                 <div class="chart_label">实时里程数（当日）</div>
                                 <div class="chart_number" id="rsslcs">
-                                    <div class="chart_number_item empty_num">
-                                        0
-                                    </div>
-                                    <div class="chart_number_item empty_num">
-                                        0
-                                    </div>
-                                    <div class="chart_number_item">
-                                        1
-                                    </div>
-                                    <div class="chart_number_item">
-                                        5
-                                    </div>
-                                    <div class="chart_number_item">
-                                        0
-                                    </div>
-                                    <div class="chart_number_item doted">
-                                        .
-                                    </div>
-                                    <div class="chart_number_item">
-                                        2
-                                    </div>
-                                    <div class="chart_number_item">
-                                        1
-                                    </div>
-                                    <div class="chart_number_item dw">
-                                        公里
-                                    </div>
-                                    <div class="clearfix"></div>
                                 </div>
                             </div>
 
@@ -290,6 +238,7 @@
                 </div>
             </div>
         </div>
+        <div id="timer"></div> 
         <canvas id="canvas"></canvas> 
 
         <!--下面为接口调用必须引用插件-->
@@ -300,6 +249,7 @@
         <script type="text/javascript" src="../WbodyJS/EasyAjax.js"></script>
         <script type="text/javascript" src="../WbodyJS/WLayer.js"></script>
         <script type="text/javascript" src="../WbodyJS/Process.js"></script>
+        <script type="text/javascript" src="../WbodyJS/WTimer.js"></script>
 
         <script type="text/javascript" src="../sra/Sra.js"></script>
         <script type="text/javascript" src="../sra/Incubator.js"></script>
@@ -401,13 +351,32 @@
 
 
             var setting = new Object();
+            var timer;
             $(document).ready(function () {
                 initParam();
+                getData();
+                setInterval(getData, 10000);
+                var table3 = new Plugin("table");
+                table3.protocol(["thead", "tbody"], tableSetting3).set("#table", style1).apply(json);
 
-                initYBP();
+                var table = new Plugin("form");
+                table.protocol(["title", "tbody"], tableSetting).set("#form", style).apply(data);
 
-                initRose();
-                var dcjax = new EasyAjax();
+                var table1 = new Plugin("form");
+                table1.protocol(["title", "tbody"], tableSetting1).set("#form", style).apply(data);
+
+                var table2 = new Plugin("form");
+                table2.protocol(["title", "tbody"], tableSetting2).set("#form", style).apply(data);
+                initMap(points);
+            });
+
+            var points = [
+                {name: '海门', x: 121.15, y: 31.89, sfpd: 0},
+                {name: '鄂尔多斯', x: 109.781327, y: 39.608266, sfpd: 1}
+            ];
+
+            var dcjax = new EasyAjax();
+            function getData() {
                 dcjax.set({
                     async: true,
                     dataType: "text",
@@ -420,7 +389,19 @@
                         repid: 252580,
                         functype: 10
                     },
+                    after: function (container, action) {
+                        if (action) {
+                            $(action).button("reset");
+                        }
+                        if (!container) {
+                            container = "body";
+                        }
+                        WLayer.qhide(container);
+                    },
                     dataDealer: function (data, ext) {
+                        if (timer) {
+                            clearInterval(timer);
+                        }
                         data = JSON.parse(data);
                         data = data.datalist;
                         for (var i  in data) {
@@ -430,79 +411,20 @@
                         }
                         initRs(setting);
                         initGS(setting);
-                        addTimer(function () {
+                        timer = addTimer(function () {
+                            setting.dylcs = Number(setting.dylcs) + Math.random() / 10;
+                            setting.drlcs = Number(setting.drlcs) + Math.random() / 100;
                             initLCS(setting.dylcs, '#ysslcs');
                             initLCS(setting.drlcs, '#rsslcs');
-                        });
+                        }, 100);
+
+                        initYBP();
+                        initRose();
                         return data;
                     }
                 }).biu();
-
-                var table3 = new Plugin("table");
-                table3.protocol(["thead", "tbody"], tableSetting3).set("#table", style1).apply(json);
-
-                var table = new Plugin("form");
-                table.protocol(["title", "tbody"], tableSetting).set("#form", style).apply(data);
-
-                var table1 = new Plugin("form");
-                table1.protocol(["title", "tbody"], tableSetting1).set("#form", style).apply(data);
-
-                var table2 = new Plugin("form");
-                table2.protocol(["title", "tbody"], tableSetting2).set("#form", style).apply(data);
-                initMap();
-
-            });
-            function addTimer(fuc) {
-
             }
-            function initLCS(lcs, target) {
-                $(target).empty();
-                lcs = Number(lcs).toFixed(2);
-                var zs = lcs.substring(0, lcs.indexOf("."));
-                var xs = lcs.substring(lcs.indexOf(".") + 1, lcs.length);
-                zs = WUtil.PrefixInteger(zs, 4);
-                for (var i in zs) {
-                    var div = $('<div>').addClass("chart_number_item");
-                    if (zs[i] === '0') {
-                        $(div).addClass("empty_num");
-                    }
-                    $(div).text(zs[i]).appendTo(target);
-                }
-                var clazz = "";
-                if (Number(zs) === 0) {
-                    clazz = "empty_num";
-                }
-                var dotdiv = $('<div>').addClass("chart_number_item");
-                $(dotdiv).addClass("dot").addClass(clazz).text(".").appendTo(target);
-                for (var m in xs) {
-                    var div = $('<div>').addClass("chart_number_item").addClass(clazz);
-                    $(div).text(xs[m]).appendTo(target);
-                }
-                var dw = $('<div>').addClass("chart_number_item").addClass(clazz);
-                $(dw).addClass("dw").text('公里').appendTo(target);
-                $(target).append($("<div class='clearfix'></div>"));
-            }
-
-            var points = [
-                {name: '海门', x: 121.15, y: 31.89, sfpd: 0},
-                {name: '鄂尔多斯', x: 109.781327, y: 39.608266, sfpd: 1}
-            ];
-            function initMap() {
-                var myChart = echarts.init(document.getElementById('map'));
-                myChart.setOption(getMap(points));
-                var bmap = myChart.getModel().getComponent('bmap').getBMap();
-                bmap.setMapStyle(mapStyle);
-                bmap.addControl(new BMap.MapTypeControl({
-                    mapTypes: [BMAP_NORMAL_MAP, BMAP_SATELLITE_MAP, BMAP_HYBRID_MAP]
-                }));
-                bmap.addTileLayer(new BMap.PanoramaCoverageLayer());
-
-                var stCtrl = new BMap.PanoramaControl(); //构造全景控件
-                stCtrl.setOffset(new BMap.Size(20, 80));
-                bmap.addControl(stCtrl);//添加全景控件
-            }
-
-
+            ;
 
             function initYBP() {
                 var fontSize = parseInt($("html").css("font-size"));

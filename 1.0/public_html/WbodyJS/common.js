@@ -111,7 +111,8 @@ WUtil.PrefixInteger = function (num, n) {
     return (Array(n).join(0) + num).slice(-n);
 };
 WUtil.random = function (m, n) {
-    return parseInt(Math.random() * (n - m + 1) + m);
+   var s= parseInt(Math.random() * (n - m + 1) + m);
+   return s;
 };
 var Validate = new Object();
 Validate.isUndefined = function (obj) {
