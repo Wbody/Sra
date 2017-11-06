@@ -35,6 +35,57 @@ WUtil.andData = function (obj, obj1) {
     }
     return object;
 };
+WUtil.isContains = function (str, substr) {
+    return (str.indexOf(substr) >= 0);
+};
+//url加时间戳 参数名timeFlag如果有值就更新
+WUtil.addLss = function (s) {
+    if (s.indexOf("?") === -1) {
+        return s += "?timeFlag=" + new Date().getTime();
+    } else {
+        return WUtil.timeStrUr(s);
+    }
+};
+WUtil.reLssTimeStr = function (surl, value) {
+    var url = surl;
+    if (!WUtil.isContains(url, "timeFlag")) {
+        url = WUtil.addLss(url);
+    }
+    if (!value) {
+        value = new Date().getTime();
+    }
+    var ssurl = WUtil.changeURLParam(url, "timeFlag", value);
+    return ssurl;
+};
+WUtil.timeStrUr = function (src) {
+    if (WUtil.getParameters(src, "timeFlag")) {
+        src = WUtil.changeURLParam(src, "timeFlag", new Date().getTime());
+    } else {
+        src += "&timeStr=" + new Date().getTime();
+    }
+    return src;
+};
+//修改url参数
+WUtil.changeURLParam = function (url, param, paramValue) {
+    var pattern = param + '=([^&]*)';
+    var replaceText = param + '=' + paramValue;
+    return url.match(pattern) ? url.replace(eval('/(' + param + '=)([^&]*)/gi'), replaceText) : (url.match('[\?]') ? url + '&' + replaceText : url + '?' + replaceText);
+};
+
+//获取url参数
+WUtil.getParameter = function (param) {
+    var query = window.location.search;
+    var iLen = param.length;
+    var iStart = query.indexOf(param);
+    if (iStart === -1)
+        return "";
+    iStart += iLen + 1;
+    var iEnd = query.indexOf("&", iStart);
+    if (iEnd === -1)
+        return query.substring(iStart);
+    return query.substring(iStart, iEnd);
+};
+
 WUtil.random = function (m, n) {
     return parseInt(Math.random() * (n - m + 1) + m);
 };

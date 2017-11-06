@@ -28,11 +28,17 @@ EasyAjaxConf.before = function (container, action) {
     if (action) {
         $(action).button("loading");
     }
+    if (!container) {
+        container = "body";
+    }
     WLayer.show(container);
 };
 EasyAjaxConf.after = function (container, action) {
     if (action) {
         $(action).button("reset");
+    }
+    if (!container) {
+        container = "body";
     }
     WLayer.hide(container);
 };
