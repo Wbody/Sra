@@ -44,9 +44,6 @@ function initLCS(lcs, target) {
         $(div).text(zs[i]).appendTo(target);
     }
     var clazz = "";
-    if (Number(lcs) === 0) {
-        clazz = "empty_num";
-    }
     var dotdiv = $('<div>').addClass("chart_number_item");
     $(dotdiv).addClass("dot").addClass(clazz).text(".").appendTo(target);
     for (var m in xs) {
