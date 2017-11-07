@@ -32,6 +32,10 @@ function initLCS(lcs, target) {
     var islt = false;
     for (var i in zs) {
         var div = $('<div>').addClass("chart_number_item");
+        if (Number(i) === 3 && Number(zs[i]) === 0) {
+            $(div).text(zs[i]).appendTo(target);
+            continue;
+        }
         if (Number(zs[i]) === 0 && !islt) {
             $(div).addClass("empty_num");
         } else {
@@ -40,7 +44,7 @@ function initLCS(lcs, target) {
         $(div).text(zs[i]).appendTo(target);
     }
     var clazz = "";
-    if (Number(zs) === 0) {
+    if (Number(lcs) === 0) {
         clazz = "empty_num";
     }
     var dotdiv = $('<div>').addClass("chart_number_item");

@@ -338,6 +338,7 @@
                         }
                         initRs(setting);
                         initGS(setting);
+                        setting.diff = 16;//16m/s
                         gl(setting);
                         initYBP(setting);
                         initRose(setting);
@@ -350,9 +351,9 @@
                 var lcbh = Number(setting.lcbh);
                 var scount = pageTime / glTime;
                 var count = 1;
-                var diff = Number(lcbh) / scount;
-                setting.dylcs = Number(setting.dylcs);
-                setting.drlcs = Number(setting.drlcs);
+                var diff = Number(setting.diff) / 1000000 * glTime;
+                setting.dylcs = Number(setting.dylcs) + Number(lcbh);
+                setting.drlcs = Number(setting.drlcs) + Number(lcbh);
                 timer = addTimer(function () {
                     if (count > scount) {
                         clearInterval(timer);
