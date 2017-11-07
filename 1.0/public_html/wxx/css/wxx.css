@@ -174,8 +174,6 @@
     margin-left: 0.3rem;
     margin-right: 0.3rem;
     padding: 0.1rem;
-    overflow-y: scroll;
-    overflow-x: hidden;
 }
 .body_c_c_item {
     height: 3.7rem;
@@ -205,6 +203,9 @@
 .table_thead{
     background-color: #1dc4f166;
 }
+.h{
+    height: 100%;
+}
 .fixed-table{
     position: absolute;
     margin-top: 0;
@@ -213,6 +214,8 @@
 .fixed-table-body{
     padding-top: 0.5rem;
     width: calc(6.6rem - 1em);
+    height: calc(100%);
+    overflow-y: scroll;
 }
 .table_body{
     background-color: #0c516966;
@@ -327,6 +330,7 @@
     width: 1.5rem;
     height: 1.7rem;
     margin-left: 0.2rem;
+    padding-top:  0.2rem;
     margin-right: 0.2rem;
     background-color: #0c516980;
     text-align: center;

@@ -702,6 +702,7 @@ var mapStyle = {
 var style1 = {
     main: {
         css: {
+            container: "div h",
             row: "text-center"
         },
         elements: {

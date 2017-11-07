@@ -175,21 +175,21 @@
                                         <div class="gz_icon_item gzzs">
                                             <div class="gz_icon_item_label">故障台站总数</div>
                                             <div class="gz_icon_item_number">
-                                                <span class="bilingbiling">92</span>
+                                                <span class="bilingbiling" id="gztzzs"></span>
                                                 <span>个</span>
                                             </div>
                                         </div>
                                         <div class="gz_icon_item ypds">
                                             <div class="gz_icon_item_label ">已派单数</div>
                                             <div class="gz_icon_item_number">
-                                                <span class="bilingbiling">92</span>
+                                                <span class="bilingbiling" id="ypds"></span>
                                                 <span>个</span>
                                             </div>
                                         </div>
                                         <div class="gz_icon_item ybxs">
                                             <div class="gz_icon_item_label ">已报修数</div>
                                             <div class="gz_icon_item_number">
-                                                <span class="bilingbiling">92</span>
+                                                <span class="bilingbiling" id="ybxs"></span>
                                                 <span>个</span>
                                             </div>
                                         </div>
@@ -199,21 +199,21 @@
                                         <div class="gz_icon_item wcls">
                                             <div class="gz_icon_item_label">未处理数</div>
                                             <div class="gz_icon_item_number">
-                                                <span class="bilingbiling">92</span>
+                                                <span class="bilingbiling"  id="wcls"></span>
                                                 <span>个</span>
                                             </div>
                                         </div>
                                         <div class="gz_icon_item ywcs">
                                             <div class="gz_icon_item_label ">已完成数</div>
                                             <div class="gz_icon_item_number">
-                                                <span class="bilingbiling">92</span>
+                                                <span class="bilingbiling"  id="ywcs"></span>
                                                 <span>个</span>
                                             </div>
                                         </div>
                                         <div class="gz_icon_item yhls">
                                             <div class="gz_icon_item_label ">已忽略</div>
                                             <div class="gz_icon_item_number">
-                                                <span class="bilingbiling">92</span>
+                                                <span class="bilingbiling"  id="yhls"></span>
                                                 <span>个</span>
                                             </div>
                                         </div>
@@ -376,8 +376,16 @@
                             points.push(point);
                         }
                         initMap(points);
-
+                        var json = data[0];
                         $("#form").empty();
+                        var table = new Plugin("form");
+                        table.protocol(["title", "tbody"], tableSetting).set("#form", style).apply(json);
+                        var table1 = new Plugin("form");
+                        table1.protocol(["title", "tbody"], tableSetting1).set("#form", style).apply(json);
+                        var table2 = new Plugin("form");
+                        table2.protocol(["title", "tbody"], tableSetting2).set("#form", style).apply(json);
+                        var point = new BMap.Point(Number(json.jd), Number(json.wd));
+                        bmap.panTo(point);
                         return data;
                     }
                 }).biu();
@@ -396,7 +404,7 @@
                 table1.protocol(["title", "tbody"], tableSetting1).set("#form", style).apply(json);
                 var table2 = new Plugin("form");
                 table2.protocol(["title", "tbody"], tableSetting2).set("#form", style).apply(json);
-                var point = {jd: Number(json.jd), wd: Number(json.wd)};
+                var point = new BMap.Point(Number(json.jd), Number(json.wd));
                 bmap.panTo(point);
             });
 
@@ -420,6 +428,13 @@
                 $("#zkxysj").text(s.zkxysj + " 分");
                 $("#jljd").text(s.jljd + " 个");
                 $("#bzlc").text(Number(s.bzlc).toFixed(2) + " 里").css("font-size", "0.20rem");
+
+                $("#yhls").text(s.yhls);
+                $("#ywcs").text(s.ywcs);
+                $("#wcls").text(s.wcls);
+                $("#ybxs").text(s.ybxs);
+                $("#ypds").text(s.ypds);
+                $("#gztzzs").text(s.gztzzs);
             }
 
             function initRs(rs) {
