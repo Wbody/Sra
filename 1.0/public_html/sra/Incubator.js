@@ -62,6 +62,7 @@ function Plugin(pluginName) {
     };
     this.protocol = function (attr, protocols) {
         this.context.MAIN.attr = attr;
+        this.context.MAIN.data = [];
         this.setting = protocols;
         return this;
     };
@@ -135,7 +136,6 @@ function Plugin(pluginName) {
                                 if (!Validate.isUndefined(dealer)) {
                                     sdata = dealer.call(dealer, sdata);
                                 }
-                                protocol.data = sdata;
 
                                 var fieldArr = new Array();
                                 var fieldOption = protocol.fieldOption;

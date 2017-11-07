@@ -2,10 +2,11 @@
 function addTimer(fuc, speed) {
     return setInterval(fuc, speed);
 }
+var bmap;
 function initMap(points) {
     var myChart = echarts.init(document.getElementById('map'));
     myChart.setOption(getMap(points));
-    var bmap = myChart.getModel().getComponent('bmap').getBMap();
+    bmap = myChart.getModel().getComponent('bmap').getBMap();
 //    bmap.setMapStyle(mapStyle);
     bmap.addControl(new BMap.MapTypeControl({
         mapTypes: [BMAP_NORMAL_MAP, BMAP_SATELLITE_MAP, BMAP_HYBRID_MAP]
@@ -18,6 +19,9 @@ function initMap(points) {
     bmap.addEventListener("addtilelayer", function (e) {
         bmap.setMapType(BMAP_HYBRID_MAP);
     });
+
+    bmap.disableScrollWheelZoom();
+
 }
 function initLCS(lcs, target) {
     $(target).empty();
@@ -51,6 +55,7 @@ function initLCS(lcs, target) {
     return lcs;
 }
 function getYBP(mcolor, acolor, value, name, fontSize) {
+    value = Number(value);
     var ybp = {
         calculable: true,
         tooltip: {
@@ -62,7 +67,8 @@ function getYBP(mcolor, acolor, value, name, fontSize) {
         series: [{
                 name: '业务指标',
                 type: 'gauge',
-                splitNumber: 10,
+                splitNumber: 5,
+                max: 10,
                 axisLine: {
                     lineStyle: {
                         color: [[0.2, mcolor], [0.8, mcolor], [1, mcolor]],
@@ -77,7 +83,7 @@ function getYBP(mcolor, acolor, value, name, fontSize) {
                     }
                 },
                 axisLabel: {
-                    show: false
+                    show: true
                 },
                 splitLine: {// 分隔线
                     show: true, // 默认显示，属性show控制显示与否
@@ -87,7 +93,7 @@ function getYBP(mcolor, acolor, value, name, fontSize) {
                     }
                 },
                 pointer: {
-                    width: 5
+                    width: 3
                 },
                 title: {
                     show: true,
@@ -99,10 +105,10 @@ function getYBP(mcolor, acolor, value, name, fontSize) {
                     }
                 },
                 detail: {
-                    formatter: '{value}',
+                    formatter: '{value} 小时',
                     show: true,
                     backgroundColor: 'rgba(0,0,0,0)',
-                    offsetCenter: [0, '40%'],
+                    offsetCenter: [0, '60%'],
                     textStyle: {
                         color: 'auto',
                         fontSize: 10
@@ -167,7 +173,7 @@ function getRS(value, barHeight) {
     };
     return rs;
 }
-function getRose(width) {
+function getRose(setting, width) {
     var option = {
         title: {
             text: '',
@@ -218,7 +224,7 @@ function getRose(width) {
                 data: [
 
                     {
-                        value: 15,
+                        value: setting.bj,
                         name: '报警',
                         itemStyle: {
                             normal: {
@@ -227,7 +233,7 @@ function getRose(width) {
                         }
                     },
                     {
-                        value: 10,
+                        value: setting.yj,
                         name: '预警',
                         itemStyle: {
                             normal: {
@@ -236,7 +242,7 @@ function getRose(width) {
                         }
                     },
                     {
-                        value: 5,
+                        value: setting.zc,
                         name: '正常',
                         itemStyle: {
                             normal: {
@@ -378,22 +384,31 @@ var tableSetting = {
     tbody: {
         isSra: true,
         fieldDealer: function (value, obj, column, field, fieldOption) {
+            if (field === "sfpd") {
+                if (Number(value) > 0) {
+                    value = "已派单";
+                } else {
+                    value = "未派单";
+                }
+            }
             var label = $("<div>").addClass("col-xs-3 line-label form_label reset-v").text(fieldOption[field].name);
             var val = $("<div>").addClass("col-xs-9 line-label form_value  reset-v").text(value);
             if (field === "EMPTY") {
                 label.addClass("EMPTY");
                 val.addClass("EMPTY");
             }
+
+
             $(column).addClass(fieldOption[field].resetClass).append(label).append(val);
         },
         fieldOption: {
-            tz: {
+            tzh: {
                 name: "台站号"
             },
-            tzm: {
+            zm: {
                 name: "台站名"
             },
-            dz: {
+            zz: {
                 name: "地址"
             },
             bzry: {
@@ -402,10 +417,10 @@ var tableSetting = {
             cwxx: {
                 name: "错误信息"
             },
-            fssj: {
-                name: "发生时间"
+            wjscsj: {
+                name: "检查时间"
             },
-            pdxq: {
+            sfpd: {
                 name: "派单情况"
             },
             EMPTY: {
@@ -724,11 +739,11 @@ var tableSetting3 = {
         dataDealer: function () {
             return {
                 NO: "序号",
-                tz: "台站号",
-                tzm: "台站名",
+                tzh: "台站号",
+                zm: "台站名",
                 cwxx: "错误信息",
-                jcsj: "发生时间",
-                cwlx: "错误类型"
+                wjscsj: "检查时间",
+                dya: "错误类型"
             };
         },
         fieldDealer: function (value, obj, column, field, fieldOption) {
@@ -741,11 +756,11 @@ var tableSetting3 = {
                 name: "序号",
                 persent: 1
             },
-            tz: {
+            tzh: {
                 name: "台站号",
                 persent: 2
             },
-            tzm: {
+            zm: {
                 name: "台站名",
                 persent: 2
             },
@@ -753,11 +768,11 @@ var tableSetting3 = {
                 name: "错误信息",
                 persent: 3
             },
-            jcsj: {
-                name: "发生时间",
+            wjscsj: {
+                name: "检查时间",
                 persent: 2
             },
-            cwlx: {
+            dya: {
                 name: "错误类型",
                 persent: 2
             }
@@ -768,7 +783,7 @@ var tableSetting3 = {
         fieldDealer: function (value, obj, column, field, fieldOption) {
             if (field === "NO") {
                 value = parseInt(WUtil.getData(column, "row")) + 1;
-                if (obj.pdzt === 1) {
+                if (Number(obj.sfpd) > 0) {
                     $(column).addClass("table_body_column_ypd");
                 } else {
                     $(column).addClass("table_body_column_wpd");
@@ -783,11 +798,11 @@ var tableSetting3 = {
                 name: "序号",
                 persent: 1
             },
-            tz: {
+            tzh: {
                 name: "台站号",
                 persent: 2
             },
-            tzm: {
+            zm: {
                 name: "台站名",
                 persent: 2
             },
@@ -795,11 +810,11 @@ var tableSetting3 = {
                 name: "错误信息",
                 persent: 3
             },
-            jcsj: {
+            wjscsj: {
                 name: "发生时间",
                 persent: 2
             },
-            cwlx: {
+            dya: {
                 name: "错误类型",
                 persent: 2
             }

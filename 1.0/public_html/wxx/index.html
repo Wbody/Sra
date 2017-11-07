@@ -249,85 +249,16 @@
         <script type="text/javascript" src="../WbodyJS/EasyAjax.js"></script>
         <script type="text/javascript" src="../WbodyJS/WLayer.js"></script>
         <script type="text/javascript" src="../WbodyJS/Process.js"></script>
-        <script type="text/javascript" src="../WbodyJS/WTimer.js"></script>
 
         <script type="text/javascript" src="../sra/Sra.js"></script>
         <script type="text/javascript" src="../sra/Incubator.js"></script>
         <script type="text/javascript" src="option.js"></script>
-
+        <script type="text/javascript" src="yz.js"></script>
 
         <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=IuStA3X5pxqWDcr5nV0DEaC337Z1hzCg"></script>
         <script type="text/javascript" src="https://cdn.bootcss.com/echarts/3.7.2/echarts.min.js"></script>
         <script type="text/javascript" src=" https://cdn.bootcss.com/echarts/3.7.2/extension/bmap.min.js"></script>
         <script>
-            var data = {
-                tz: "M1234",
-                tzm: "长安站",
-                dz: "新世界中心B座",
-                bzry: "高以朝",
-                cwxx: "雨量:空间一致性判断：错误数据（无降水产生雨量）; ",
-                fssj: "2017-09:10 09:30:00",
-                pdxq: "已派单",
-                EMPTY: "NULL"
-            };
-
-            var json = [{
-                    tz: "M1234",
-                    tzm: "长安站",
-                    cwxx: "雨量:空间一致性判断：错误数据（无降水产生雨量）; ",
-                    jcsj: "09:30:00",
-                    cwlx: "设备故障",
-                    pdzt: 1
-                }, {
-                    tz: "M1234",
-                    tzm: "长安站",
-                    cwxx: "雨量:空间一致性判断：错误数据（无降水产生雨量）; ",
-                    jcsj: "09:30:00",
-                    cwlx: "设备故障",
-                    pdzt: 1
-                }, {
-                    tz: "M1234",
-                    tzm: "长安站",
-                    cwxx: "雨量:空间一致性判断：错误数据（无降水产生雨量）; ",
-                    jcsj: "09:30:00",
-                    cwlx: "设备故障"
-                }, {
-                    tz: "M1234",
-                    tzm: "长安站",
-                    cwxx: "雨量:空间一致性判断：错误数据（无降水产生雨量）; ",
-                    jcsj: "09:30:00",
-                    cwlx: "设备故障",
-                    pdzt: 0
-                }, {
-                    tz: "M1234",
-                    tzm: "长安站",
-                    cwxx: "雨量:空间一致性判断：错误数据（无降水产生雨量）; ",
-                    jcsj: "09:30:00",
-                    cwlx: "设备故障"
-                }, {
-                    tz: "M1234",
-                    tzm: "长安站",
-                    cwxx: "雨量:空间一致性判断：错误数据（无降水产生雨量）; ",
-                    jcsj: "09:30:00",
-                    cwlx: "设备故障",
-                    pdzt: 1
-                }, {
-                    tz: "M1234",
-                    tzm: "长安站",
-                    cwxx: "雨量:空间一致性判断：错误数据（无降水产生雨量）; ",
-                    jcsj: "09:30:00",
-                    cwlx: "设备故障",
-                    pdzt: 0
-                }, {
-                    tz: "M1234",
-                    tzm: "长安站",
-                    cwxx: "雨量:空间一致性判断：错误数据（无降水产生雨量）; ",
-                    jcsj: "09:30:00",
-                    cwlx: "设备故障",
-                    pdzt: 1
-                }];
-
-
             var username;
             var password;
             var zone;
@@ -345,7 +276,7 @@
                     password = "123456";
                 }
                 if (!zone) {
-                    zone = 3;
+                    zone = 2;
                 }
             }
 
@@ -355,25 +286,10 @@
             $(document).ready(function () {
                 initParam();
                 getData();
-                setInterval(getData, 10000);
-                var table3 = new Plugin("table");
-                table3.protocol(["thead", "tbody"], tableSetting3).set("#table", style1).apply(json);
 
-                var table = new Plugin("form");
-                table.protocol(["title", "tbody"], tableSetting).set("#form", style).apply(data);
-
-                var table1 = new Plugin("form");
-                table1.protocol(["title", "tbody"], tableSetting1).set("#form", style).apply(data);
-
-                var table2 = new Plugin("form");
-                table2.protocol(["title", "tbody"], tableSetting2).set("#form", style).apply(data);
-                initMap(points);
             });
 
-            var points = [
-                {name: '海门', x: 121.15, y: 31.89, sfpd: 0},
-                {name: '鄂尔多斯', x: 109.781327, y: 39.608266, sfpd: 1}
-            ];
+            var points = [];
 
             var dcjax = new EasyAjax();
             function getData() {
@@ -385,7 +301,7 @@
                         clientid: 101,
                         username: username,
                         password: password,
-                        requeststr: "&bzdw1=" + zone,
+                        requeststr: "&bm1=" + 2,
                         repid: 252580,
                         functype: 10
                     },
@@ -418,23 +334,81 @@
                             initLCS(setting.drlcs, '#rsslcs');
                         }, 100);
 
-                        initYBP();
-                        initRose();
+                        initYBP(setting);
+                        initRose(setting);
+                        return data;
+                    }
+                }).biu();
+                initData();
+            }
+            var formjax = new EasyAjax();
+            function initData() {
+                formjax.set({
+                    async: true,
+                    dataType: "text",
+                    url: server + "/acc/servlet/FuncServlet",
+                    params: {
+                        clientid: 101,
+                        username: username,
+                        password: password,
+                        requeststr: "&bzdw1=" + 3,
+                        repid: 242845,
+                        functype: 10
+                    },
+                    after: function (container, action) {
+                        if (action) {
+                            $(action).button("reset");
+                        }
+                        if (!container) {
+                            container = "body";
+                        }
+                        WLayer.qhide(container);
+                    },
+                    dataDealer: function (data, ext) {
+                        data = JSON.parse(data);
+                        data = data.datalist;
+                        $("#table").empty();
+                        var table3 = new Plugin("table");
+                        table3.protocol(["thead", "tbody"], tableSetting3).set("#table", style1).apply(data);
+                        for (var i in data) {
+                            var sfpd = data[i].sfpd;
+                            var point = {name: data[i].zm, x: data[i].jd, y: data[i].wd, sfpd: sfpd};
+                            points.push(point);
+                        }
+                        initMap(points);
+
+                        $("#form").empty();
                         return data;
                     }
                 }).biu();
             }
-            ;
 
-            function initYBP() {
+            $(document).on("click", ".table_body", function () {
+                var json = $(this).attr("data-json");
+                Log.openLog();
+                Log.debug(json);
+                json = JSON.parse(json);
+
+                $("#form").empty();
+                var table = new Plugin("form");
+                table.protocol(["title", "tbody"], tableSetting).set("#form", style).apply(json);
+                var table1 = new Plugin("form");
+                table1.protocol(["title", "tbody"], tableSetting1).set("#form", style).apply(json);
+                var table2 = new Plugin("form");
+                table2.protocol(["title", "tbody"], tableSetting2).set("#form", style).apply(json);
+                var point = {jd: Number(json.jd), wd: Number(json.wd)};
+                bmap.panTo(point);
+            });
+
+            function initYBP(setting) {
                 var fontSize = parseInt($("html").css("font-size"));
                 fontSize = fontSize * 0.2;
                 var myChart = echarts.init(document.getElementById('xysj'));
-                myChart.setOption(getYBP("#0eeed0", "#012a59", 60, "平均响应时间", fontSize));
+                myChart.setOption(getYBP("#0eeed0", "#012a59", setting.pjxysj, "平均响应时间", fontSize));
                 myChart = echarts.init(document.getElementById('gzwxsj'));
-                myChart.setOption(getYBP("#3db5fa", "#012a59", 50, "平均故障修复时间", fontSize));
+                myChart.setOption(getYBP("#3db5fa", "#012a59", setting.pjgzxfsj, "平均故障修复时间", fontSize));
                 myChart = echarts.init(document.getElementById('gzcxsj'));
-                myChart.setOption(getYBP("#9e56f0", "#012a59", 70, "平均故障持续时间", fontSize));
+                myChart.setOption(getYBP("#9e56f0", "#012a59", setting.pjxysj, "平均故障持续时间", fontSize));
             }
 
             function initGS(s) {
@@ -464,108 +438,13 @@
                 myChart.setOption(getRS(Number(rs.tzrs) / Number(rs.zrs), height));
                 $("#ztzrs").parent().find(".rs_item_num").text(Number(rs.tzrs));
             }
-            function initRose() {
+            function initRose(setting) {
                 var fontSize = parseInt($("html").css("font-size"));
                 var height = fontSize;
                 var myChart = echarts.init(document.getElementById('rose'));
-                myChart.setOption(getRose(height));
+                myChart.setOption(getRose(setting, height));
             }
         </script>
-        <script>
-            //宇宙特效
-            "use strict";
-            var fontSize = parseInt($("html").css("font-size"));
-            var canvas = document.getElementById('canvas'),
-                    ctx = canvas.getContext('2d'),
-                    w = canvas.width = 32 * fontSize,
-                    h = canvas.height = 18 * fontSize,
-                    hue = 217,
-                    stars = [],
-                    count = 0,
-                    maxStars = 1300;//星星数量
 
-            var canvas2 = document.createElement('canvas');
-            var ctx2 = canvas2.getContext('2d');
-            canvas2.width = 100;
-            canvas2.height = 100;
-            var half = canvas2.width / 2;
-            var gradient2 = ctx2.createRadialGradient(half, half, 0, half, half, half);
-            gradient2.addColorStop(0.025, '#CCC');
-            gradient2.addColorStop(0.1, 'hsl(' + hue + ', 61%, 33%)');
-            gradient2.addColorStop(0.25, 'hsl(' + hue + ', 64%, 6%)');
-            gradient2.addColorStop(1, 'transparent');
-            ctx2.fillStyle = gradient2;
-            ctx2.beginPath();
-            ctx2.arc(half, half, half, 0, Math.PI * 2);
-            ctx2.fill();
-            // End cache
-            function random(min, max) {
-                if (arguments.length < 2) {
-                    max = min;
-                    min = 0;
-                }
-
-                if (min > max) {
-                    var hold = max;
-                    max = min;
-                    min = hold;
-                }
-
-                return Math.floor(Math.random() * (max - min + 1)) + min;
-            }
-
-            function maxOrbit(x, y) {
-                var max = Math.max(x, y),
-                        diameter = Math.round(Math.sqrt(max * max + max * max));
-                return diameter / 2;
-                //星星移动范围，值越大范围越小，
-            }
-
-            var Star = function () {
-                this.orbitRadius = random(maxOrbit(w, h));
-                this.radius = random(60, this.orbitRadius) / 8;
-                //星星大小
-                this.orbitX = w / 2;
-                this.orbitY = h / 2;
-                this.timePassed = random(0, maxStars);
-                this.speed = random(this.orbitRadius) / 200000;
-                //星星移动速度
-                this.alpha = random(2, 10) / 10;
-                count++;
-                stars[count] = this;
-            };
-            Star.prototype.draw = function () {
-                var x = Math.sin(this.timePassed) * this.orbitRadius + this.orbitX,
-                        y = Math.cos(this.timePassed) * this.orbitRadius + this.orbitY,
-                        twinkle = random(10);
-
-                if (twinkle === 1 && this.alpha > 0) {
-                    this.alpha -= 0.05;
-                } else if (twinkle === 2 && this.alpha < 1) {
-                    this.alpha += 0.05;
-                }
-
-                ctx.globalAlpha = this.alpha;
-                ctx.drawImage(canvas2, x - this.radius / 2, y - this.radius / 2, this.radius, this.radius);
-                this.timePassed += this.speed;
-            };
-
-            for (var i = 0; i < maxStars; i++) {
-                new Star();
-            }
-
-            function animation() {
-                ctx.globalCompositeOperation = 'source-over';
-                ctx.globalAlpha = 0.5; //尾巴
-                ctx.fillStyle = 'hsla(' + hue + ', 64%, 6%, 2)';
-                ctx.fillRect(0, 0, w, h);
-                ctx.globalCompositeOperation = 'lighter';
-                for (var i = 1, l = stars.length; i < l; i++) {
-                    stars[i].draw();
-                }
-                window.requestAnimationFrame(animation);
-            }
-            animation();
-        </script>
     </body>
 </html>
