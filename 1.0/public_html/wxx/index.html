@@ -31,13 +31,13 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="header">
-                        <div class="header_item header_l">
+                        <div class="header_item header_l" id="rq">
                             2017年10月29号，星期日
                         </div>
                         <div class="header_item header_c">
                             台站监控中心
                         </div>
-                        <div class="header_item header_r">
+                        <div class="header_item header_r" id="sj">
                             上午10点28分45秒
                         </div>
                         <div class="clearfix"></div>
@@ -265,7 +265,20 @@
             var server = "http://192.168.3.100:9017";
             var pageTime = 60000;
             var glTime = 5000;
+            function initClick() {
+                var a = new Array("日", "一", "二", "三", "四", "五", "六");
+                addTimer(function () {
+                    var date = new Date();
+                    var week = new Date().getDay();
+                    var pattern = "yyyy年MM月dd日,星期" + a[week];
+                    var pattern1 = "hh点mm分ss秒";
+                    $("#rq").text(DatePattern.getFormatDate(date, pattern));
+                    $("#sj").text(DatePattern.getFormatDate(date, pattern1));
+
+                }, 1000);
+            }
             function initParam() {
+                initClick();
                 username = WUtil.getParameter("username");
                 password = WUtil.getParameter("password");
                 zone = WUtil.getParameter("zone");
@@ -281,17 +294,14 @@
                     zone = 2;
                 }
             }
-
-
             var setting = new Object();
             var timer;
             $(document).ready(function () {
                 initParam();
                 getData();
+                setInterval(getData, pageTime);
             });
-
             var points = [];
-
             var dcjax = new EasyAjax();
             function getData() {
                 dcjax.set({
@@ -328,42 +338,43 @@
                         }
                         initRs(setting);
                         initGS(setting);
-                        var lcbh = Number(setting.lcbh);
-
-                        var scount = pageTime / glTime;
-                        var count = 1;
-                        var diff = Number(lcbh) / scount;
-                        setting.dylcs = Number(setting.dylcs);
-                        setting.drlcs = Number(setting.drlcs);
-                        timer = addTimer(function () {
-                            if (count > scount) {
-                                clearInterval(timer);
-                                return;
-                            }
-                            var zscount = 10;
-                            var zcount = 1;
-                            var zdiff = Number(diff) / zscount;
-                            var timer2 = addTimer(function () {
-                                if (zcount > zscount) {
-                                    clearInterval(timer2);
-                                    return;
-                                }
-                                setting.dylcs += zdiff;
-                                setting.drlcs += zdiff;
-                                initLCS(setting.dylcs, '#ysslcs');
-                                initLCS(setting.drlcs, '#rsslcs');
-                                zcount++;
-                            }, 10);
-
-                            count++;
-                        }, glTime);
-
+                        gl(setting);
                         initYBP(setting);
                         initRose(setting);
                         return data;
                     }
                 }).biu();
                 initData();
+            }
+            function gl(setting) {
+                var lcbh = Number(setting.lcbh);
+                var scount = pageTime / glTime;
+                var count = 1;
+                var diff = Number(lcbh) / scount;
+                setting.dylcs = Number(setting.dylcs);
+                setting.drlcs = Number(setting.drlcs);
+                timer = addTimer(function () {
+                    if (count > scount) {
+                        clearInterval(timer);
+                        return;
+                    }
+                    var zscount = 10;
+                    var zcount = 1;
+                    var zdiff = Number(diff) / zscount;
+                    var timer2 = addTimer(function () {
+                        if (zcount > zscount) {
+                            clearInterval(timer2);
+                            return;
+                        }
+                        setting.dylcs += zdiff;
+                        setting.drlcs += zdiff;
+                        initLCS(setting.dylcs, '#ysslcs');
+                        initLCS(setting.drlcs, '#rsslcs');
+                        zcount++;
+                    }, 10);
+
+                    count++;
+                }, glTime);
             }
             var formjax = new EasyAjax();
             function initData() {
