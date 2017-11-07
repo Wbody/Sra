@@ -263,6 +263,8 @@
             var password;
             var zone;
             var server = "http://192.168.3.100:9017";
+            var pageTime = 60000;
+            var glTime = 5000;
             function initParam() {
                 username = WUtil.getParameter("username");
                 password = WUtil.getParameter("password");
@@ -286,7 +288,6 @@
             $(document).ready(function () {
                 initParam();
                 getData();
-
             });
 
             var points = [];
@@ -327,12 +328,35 @@
                         }
                         initRs(setting);
                         initGS(setting);
+                        var lcbh = Number(setting.lcbh);
+
+                        var scount = pageTime / glTime;
+                        var count = 1;
+                        var diff = Number(lcbh) / scount;
+                        setting.dylcs = Number(setting.dylcs);
+                        setting.drlcs = Number(setting.drlcs);
                         timer = addTimer(function () {
-                            setting.dylcs = Number(setting.dylcs) + Math.random() / 10;
-                            setting.drlcs = Number(setting.drlcs) + Math.random() / 100;
-                            initLCS(setting.dylcs, '#ysslcs');
-                            initLCS(setting.drlcs, '#rsslcs');
-                        }, 100);
+                            if (count > scount) {
+                                clearInterval(timer);
+                                return;
+                            }
+                            var zscount = 10;
+                            var zcount = 1;
+                            var zdiff = Number(diff) / zscount;
+                            var timer2 = addTimer(function () {
+                                if (zcount > zscount) {
+                                    clearInterval(timer2);
+                                    return;
+                                }
+                                setting.dylcs += zdiff;
+                                setting.drlcs += zdiff;
+                                initLCS(setting.dylcs, '#ysslcs');
+                                initLCS(setting.drlcs, '#rsslcs');
+                                zcount++;
+                            }, 10);
+
+                            count++;
+                        }, glTime);
 
                         initYBP(setting);
                         initRose(setting);
@@ -424,10 +448,10 @@
                 $("#ljqx").text(s.ljqx + " 个");
                 $("#ghpj").text(s.ghpj + " 个");
                 $("#ljxj").text(s.ljxj + " 个");
-                $("#pxks").text(s.pxks + " 个");
+                $("#pxks").text(s.pxks + " 人次");
                 $("#zkxysj").text(s.zkxysj + " 分");
                 $("#jljd").text(s.jljd + " 个");
-                $("#bzlc").text(Number(s.bzlc).toFixed(2) + " 里").css("font-size", "0.20rem");
+                $("#bzlc").text(parseInt(s.bzlc) + " 公里");
 
                 $("#yhls").text(s.yhls);
                 $("#ywcs").text(s.ywcs);
