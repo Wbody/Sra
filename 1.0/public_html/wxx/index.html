@@ -262,6 +262,7 @@
             var username;
             var password;
             var zone;
+            var bzdw;
             var server = "http://192.168.3.100:9017";
             var pageTime = 60000;
             var glTime = 5000;
@@ -293,6 +294,9 @@
                 if (!zone) {
                     zone = 2;
                 }
+                 if (!bzdw) {
+                    zone = 3;
+                }
             }
             var setting = new Object();
             var timer;
@@ -312,7 +316,7 @@
                         clientid: 101,
                         username: username,
                         password: password,
-                        requeststr: "&bm1=" + 2,
+                        requeststr: "&bm1=" +zone,
                         repid: 252580,
                         functype: 10
                     },
@@ -387,7 +391,7 @@
                         clientid: 101,
                         username: username,
                         password: password,
-                        requeststr: "&bzdw1=" + 3,
+                        requeststr: "&bzdw1=" + bzdw,
                         repid: 242845,
                         functype: 10
                     },
