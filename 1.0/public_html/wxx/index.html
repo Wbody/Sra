@@ -47,7 +47,7 @@
                         <div class="body_item body_l">
                             <div class="ybp">
                                 <div class="chart_title">
-                                    <img src="image/台站.png"/>台站
+                                    <img src="image/tz.png"/>台站
                                 </div>
                                 <div class="ybp_item ybp_item_l" id="xysj"></div>
                                 <div class="ybp_item ybp_item_c" id="gzwxsj"></div>
@@ -57,7 +57,7 @@
 
                             <div class="lcs">
                                 <div class="chart_title">
-                                    <img src="image/车.png"/>车
+                                    <img src="image/che.png"/>车
                                 </div>
                                 <div class="chart_label">实时里程数（当月）</div>
                                 <div class="chart_number" id="ysslcs">
@@ -69,7 +69,7 @@
 
                             <div class="rs">
                                 <div class="chart_title">
-                                    <img src="image/人.png"/>人
+                                    <img src="image/ren.png"/>人
                                 </div>
                                 <div class="rs_one">
                                     <div class="rs_one_item rs_item_l">当天待命人数</div>
@@ -111,17 +111,17 @@
                             <div class="rs_icon">
                                 <div class="rs_icon_one">
                                     <div class="rs_icon_item">
-                                        <div class="rs_icon_item_img"><img src="image/专业保障人员.png"/></div>
+                                        <div class="rs_icon_item_img"><img src="image/zybzry.png"/></div>
                                         <div class="rs_icon_item_label">专业保障人员</div>
                                         <div class="rs_icon_item_num" id="zybzry"></div>
                                     </div>
                                     <div class="rs_icon_item">
-                                        <div class="rs_icon_item_img"><img src="image/累计巡检.png"/></div>
+                                        <div class="rs_icon_item_img"><img src="image/bzlc.png"/></div>
                                         <div class="rs_icon_item_label">累计巡检</div>
                                         <div class="rs_icon_item_num" id="ljxj"></div>
                                     </div>
                                     <div class="rs_icon_item">
-                                        <div class="rs_icon_item_img"><img src="image/累计抢修.png"/></div>
+                                        <div class="rs_icon_item_img"><img src="image/ljqx.png"/></div>
                                         <div class="rs_icon_item_label">累计抢修</div>
                                         <div class="rs_icon_item_num"  id="ljqx"></div>
                                     </div>
@@ -129,17 +129,17 @@
                                 </div>
                                 <div class="rs_icon_one">
                                     <div class="rs_icon_item">
-                                        <div class="rs_icon_item_img"><img src="image/更换配件.png"/></div>
+                                        <div class="rs_icon_item_img"><img src="image/ghpj.png"/></div>
                                         <div class="rs_icon_item_label">更换配件</div>
                                         <div class="rs_icon_item_num" id="ghpj"></div>
                                     </div>
                                     <div class="rs_icon_item">
-                                        <div class="rs_icon_item_img"><img src="image/计量检定.png"/></div>
+                                        <div class="rs_icon_item_img"><img src="image/jljd.png"/></div>
                                         <div class="rs_icon_item_label">计量检定</div>
                                         <div class="rs_icon_item_num" id="jljd"></div>
                                     </div>
                                     <div class="rs_icon_item">
-                                        <div class="rs_icon_item_img"><img src="image/保障里程.png"/></div>
+                                        <div class="rs_icon_item_img"><img src="image/bzlc.png"/></div>
                                         <div class="rs_icon_item_label">保障里程</div>
                                         <div class="rs_icon_item_num" id="bzlc"></div>
                                     </div>
@@ -148,12 +148,12 @@
                                 <div class="rs_icon_one">
 
                                     <div class="rs_icon_item">
-                                        <div class="rs_icon_item_img"><img src="image/培训考试.png"/></div>
+                                        <div class="rs_icon_item_img"><img src="image/pxks.png"/></div>
                                         <div class="rs_icon_item_label">培训考试</div>
                                         <div class="rs_icon_item_num" id="pxks"></div>
                                     </div>
                                     <div class="rs_icon_item">
-                                        <div class="rs_icon_item_img"><img src="image/最快响应.png"/></div>
+                                        <div class="rs_icon_item_img"><img src="image/zkxy.png"/></div>
                                         <div class="rs_icon_item_label">最快响应</div>
                                         <div class="rs_icon_item_num" id="zkxysj"></div>
                                     </div>
@@ -261,9 +261,9 @@
         <script>
             var username;
             var password;
+            var server = "http://192.168.3.100:9017/";
             var zone;
             var bzdw;
-            var server = "http://192.168.3.100:9017";
             var pageTime = 60000;
             var glTime = 5000;
             function initClick() {
@@ -283,19 +283,20 @@
                 username = WUtil.getParameter("username");
                 password = WUtil.getParameter("password");
                 zone = WUtil.getParameter("zone");
+                bzdw = WUtil.getParameter("bzdw");
                 if (!username) {
                     username = "ad";
                 } else {
                     server = "";
                 }
                 if (!password) {
-                    password = "123456";
+                    password = "fsRcTYZ0";
                 }
                 if (!zone) {
                     zone = 2;
                 }
-                 if (!bzdw) {
-                    zone = 3;
+                if (!bzdw) {
+                    bzdw = 3;
                 }
             }
             var setting = new Object();
@@ -315,8 +316,8 @@
                     params: {
                         clientid: 101,
                         username: username,
-                        password: password,
-                        requeststr: "&bm1=" +zone,
+                        epassword: password,
+                        requeststr: "&bm1=" + zone,
                         repid: 252580,
                         functype: 10
                     },
@@ -342,7 +343,6 @@
                         }
                         initRs(setting);
                         initGS(setting);
-                        setting.diff = 0;//16m/s
                         gl(setting);
                         initYBP(setting);
                         initRose(setting);
@@ -357,7 +357,7 @@
                 var count = 1;
                 var diff = Number(setting.diff) / 1000000 * glTime;
                 setting.dylcs = Number(setting.dylcs) + Number(lcbh);
-                setting.drlcs = Number(setting.drlcs) + Number(lcbh);
+                setting.drlcs = Number(setting.drlcs) - Math.random()/10 + Number(lcbh);
                 timer = addTimer(function () {
                     if (count > scount) {
                         clearInterval(timer);
@@ -390,7 +390,7 @@
                     params: {
                         clientid: 101,
                         username: username,
-                        password: password,
+                        epassword: password,
                         requeststr: "&bzdw1=" + bzdw,
                         repid: 242845,
                         functype: 10
