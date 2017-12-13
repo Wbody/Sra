@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>form</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../WbodyJS/css/common.css">
+        <link rel="stylesheet" href="../lib/Bootstrap/3.3.7/dist/css/bootstrap.min.css">
+        <style>
+            html{
+                font-size: 50px;
+            }
+            /*form样式 不包含宽高*/
+            .border{
+                border: 0.01rem solid transparent;
+            }
+            .border_inline{
+                border-top: 0 !important;
+            }
+            .border_b{
+                border: 0.01rem solid #1dc4fe;
+                border-top: 0px !important;
+            }
+            .border_a{
+                border-top: 0.01rem solid #1dc4fe;
+            }
+            .form_label{
+                border-right: 0.01rem solid #1dc4fe;
+                color: #008eff;
+            }
+            .EMPTY{
+                color: transparent;
+            }
+            .form{
+                color: #addafe;
+                width: 6rem;
+                font-size: 0.2rem;
+                margin-bottom: 0.22rem;
+            }
+            .form_title{
+                color: #fff;
+                background-color: #1dc4f14d;
+                height: 0.48rem;
+                line-height:0.50rem;
+                font-size: 0.24rem;
+            }
+            .form_label{
+                width: 1.08rem;
+                height: 0.48rem;
+                line-height:0.48rem;
+                font-size: 0.2rem;
+            }
+            .form_slabel{
+                font-size: 0.16rem;
+            }
+            .form_value{
+                width: calc(100% - 1.08rem);
+                height: 0.48rem;
+                line-height:0.48rem;
+            }
+            .form_value img{
+                width: 0.30rem;
+            }
+            .backgroup{
+                background-image: url(back.png);
+                background-position: center;
+                background-size: auto;
+                background-repeat: no-repeat;
+            }
+            .col-xs-12{
+                width: 100% !important;
+            }
+            .picture_box{
+                margin-top: 0.18rem;
+                margin-left: auto;
+                margin-right: auto;
+                padding: 0.1rem;
+                width: 6rem;
+                height: 3rem;
+                background-image: url(picture_back.png);
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                background-position: center;
+            }
+            .picture_box img{
+                width: calc(100%);
+                height:  calc(100%);
+            }
+        </style>
+    </head>
+    <body class="backgroup">
+        <div id="form">
+
+        </div>
+        <div id="picture_box">
+            <div class="picture_box">
+                <img src="demo.jpg" />
+            </div>
+        </div>
+
+        <!--下面为接口调用必须引用插件-->
+        <script type="text/javascript" src="../lib/jquery/1.9.1/jquery.min.js"></script>
+
+        <!--下面为接口渲染插件-->
+        <script type="text/javascript" src="../WbodyJS/common.js"></script>
+        <script type="text/javascript" src="../sra/Sra.js"></script>
+        <script type="text/javascript" src="../sra/Incubator.js"></script>
+        <script>
+            var data = {
+                tz: "M1234",
+                tzm: "长安站",
+                dz: "新世界中心B座",
+                bzry: "高以朝",
+                cwxx: "雨量:空间一致性判断：错误数据（无降水产生雨量）; ",
+                fssj: "2017-09:10 09:30:00",
+                pdxq: "已派单",
+                EMPTY: "NULL"
+            };
+
+            $(document).ready(function () {
+                var table = new Plugin("table");
+                table.protocol(["title", "tbody"], tableSetting).set("#form", style).apply(data);
+
+                var table1 = new Plugin("table");
+                table1.protocol(["title", "tbody"], tableSetting1).set("#form", style).apply(data);
+
+                var table2 = new Plugin("table");
+                table2.protocol(["title", "tbody"], tableSetting2).set("#form", style).apply(data);
+            });
+            var style = {
+                main: {
+                    css: {
+                        container: "container form",
+                        row: "border text-center row"
+                    },
+                    elements: {
+                        container: "div",
+                        row: "div",
+                        column: "div"
+                    }
+                },
+                title: {
+                    css: {
+                        container: "form_title"
+                    },
+                    elements: {
+                        container: "div"
+                    }
+                },
+                tbody: {
+                    css: {
+                        container: "border_a",
+                        row: "overflow-hidden  ",
+                        column: "col-xs-6 reset-v text-center border_b"
+                    },
+                    elements: {
+                        row: "div",
+                        column: "div"
+                    }
+                }
+            };
+            var tableSetting = {
+                title: {
+                    isSra: false,
+                    text: "基本信息"
+                },
+                tbody: {
+                    isSra: true,
+                    fieldDealer: function (value, obj, column, field, fieldOption) {
+                        var label = $("<div>").addClass("col-xs-3 line-label form_label reset-v").text(fieldOption[field].name);
+                        var val = $("<div>").addClass("col-xs-9 line-label form_value  reset-v").text(value);
+                        if (field === "EMPTY") {
+                            label.addClass("EMPTY");
+                            val.addClass("EMPTY");
+                        }
+                        $(column).addClass(fieldOption[field].resetClass).append(label).append(val);
+                    },
+                    fieldOption: {
+                        tz: {
+                            name: "台站号"
+                        },
+                        tzm: {
+                            name: "台站名"
+                        },
+                        dz: {
+                            name: "地址"
+                        },
+                        bzry: {
+                            name: "保障人员"
+                        },
+                        cwxx: {
+                            name: "错误信息"
+                        },
+                        fssj: {
+                            name: "发生时间"
+                        },
+                        pdxq: {
+                            name: "派单情况"
+                        },
+                        EMPTY: {
+                            name: "NULL"
+                        }
+                    }
+                }
+            };
+
+            var tableSetting1 = {
+                title: {
+                    isSra: false,
+                    text: "要素信息"
+                },
+                tbody: {
+                    isSra: true,
+                    fieldDealer: function (value, obj, column, field, fieldOption) {
+                        var label = $("<div>").addClass("col-xs-3 line-label form_label reset-v").text(fieldOption[field].name);
+                        if (field !== "bz") {
+                            value = WUtil.random(0, 2);
+                            var url = "point_" + value + ".png";
+                            value = $("<img>").attr("src", url);
+                        }
+                        var val = $("<div>").addClass("col-xs-9 line-label form_value  reset-v").append(value);
+                        if (field === "EMPTY") {
+                            label.addClass("EMPTY");
+                            val.addClass("EMPTY");
+                        }
+                        $(column).addClass(fieldOption[field].resetClass).append(label).append(val);
+                    },
+                    fieldOption: {
+                        fx: {
+                            name: "风向"
+                        },
+                        fs: {
+                            name: "风速"
+                        },
+                        wd: {
+                            name: "温度"
+                        },
+                        sd: {
+                            name: "湿度"
+                        },
+                        yl: {
+                            name: "雨量"
+                        },
+                        qy: {
+                            name: "气压"
+                        },
+                        njd: {
+                            name: "能见度"
+                        },
+                        dw: {
+                            name: "地温"
+                        },
+                        bz: {
+                            name: "备注",
+                            resetClass: "col-xs-12"
+                        }
+                    }
+                }
+            };
+            var tableSetting2 = {
+                title: {
+                    isSra: false,
+                    text: "状态信息"
+                },
+                tbody: {
+                    isSra: true,
+                    fieldDealer: function (value, obj, column, field, fieldOption) {
+                        var label = $("<div>").addClass("col-xs-3 line-label form_label form_slabel reset-v").text(fieldOption[field].name);
+                        value = WUtil.random(0, 2);
+                        var url = "point_" + value + ".png";
+                        value = $("<img>").attr("src", url);
+                        var val = $("<div>").addClass("col-xs-9 line-label form_value  reset-v").append(value);
+                        if (field === "EMPTY") {
+                            label.addClass("EMPTY");
+                            val.addClass("EMPTY");
+                        }
+                        $(column).addClass(fieldOption[field].resetClass).append(label).append(val);
+                    },
+                    fieldOption: {
+                        zbdy: {
+                            name: "主板电压"
+                        },
+                        zbwd: {
+                            name: "主板温度"
+                        },
+                        dydy: {
+                            name: "电源电压"
+                        },
+                        gdlx: {
+                            name: "供电类型"
+                        },
+                        hdgl: {
+                            name: "耗电功率"
+                        },
+                        cfk: {
+                            name: "CF卡"
+                        },
+                        wdcgq: {
+                            name: "温度传杆器"
+                        },
+                        sdcgq: {
+                            name: "湿度传杆器"
+                        },
+                        fxcgq: {
+                            name: "风向传感器"
+                        },
+                        fscgq: {
+                            name: "风速传感器"
+                        },
+                        csfcgq: {
+                            name: "超声风传感器"
+                        },
+                        fdylcgq: {
+                            name: "翻斗雨量传感器"
+                        },
+                        qycgq: {
+                            name: "气压传感器"
+                        },
+                        njdcgq: {
+                            name: "能见度传感器"
+                        },
+                        jsxxcgq: {
+                            name: "降水现象传感器"
+                        },
+                        xscgq: {
+                            name: "雪深传感器"
+                        },
+                        czcgq: {
+                            name: "称重传感器"
+                        },
+                        cwcgq: {
+                            name: "草温传感器"
+                        },
+                        dbwcgq: {
+                            name: "地表温度传感器"
+                        },
+                        qcdwcgq: {
+                            name: "浅层地温传感器"
+                        },
+                        sddwcgq: {
+                            name: "深层地温传感器"
+                        },
+                        rzcgq: {
+                            name: "日照传感器"
+                        },
+                        srdzt: {
+                            name: "输入端状态"
+                        },
+                        srddy: {
+                            name: "输入端电压"
+                        },
+                        dfddl: {
+                            name: "充放电电流"
+                        },
+                        xdczt: {
+                            name: "蓄电池端状"
+                        }
+                    }
+                }
+            };
+        </script>
+    </body>
+</html>

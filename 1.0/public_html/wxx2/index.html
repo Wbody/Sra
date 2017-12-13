@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>大屏幕监控</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../lib/Bootstrap/3.3.7/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../WbodyJS/css/common.css">
+        <link rel="stylesheet" href="css/wxx.css">
+        <style>
+            html{
+                font-size: 50px;
+            }
+            .anchorBL{
+                display: none;
+            }
+            .backgroup{
+                position: fixed;
+            }
+            .chart_number_item{
+                font-family: LcdD;
+            }
+            .Wlayer, .inlineWlayer {
+                z-index: 1001;
+                background-color: transparent;
+            }
+            body{
+                overflow: hidden;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="backgroup">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="header">
+                        <div class="header_item header_l" id="rq">
+                            2017年10月29号，星期日
+                        </div>
+                        <div class="header_item header_c">
+                            台站监控中心
+                        </div>
+                        <div class="header_item header_r" id="sj">
+                            上午10点28分45秒
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="body">
+                        <div class="body_item body_l">
+                            <div class="ybp">
+                                <div class="chart_title">
+                                    <img src="image/tz.png"/>台站
+                                </div>
+                                <div class="ybp_item ybp_item_l" id="xysj"></div>
+                                <div class="ybp_item ybp_item_c" id="gzwxsj"></div>
+                                <div class="ybp_item ybp_item_r" id="gzcxsj"></div>
+                                <div class="clearfix"></div>
+                                <div class="ybp_item ybp_item_label " >平均响应时间</div>
+                                <div class="ybp_item ybp_item_label" >平均故障修复时间</div>
+                                <div class="ybp_item ybp_item_label" >平均故障持续时间</div>
+                                <div class="clearfix ybp_item_label"></div>
+                            </div>
+
+                            <div class="lcs">
+                                <div class="chart_title">
+                                    <img src="image/che.png"/>车
+                                </div>
+                                <div class="chart_label">实时里程数（当月）</div>
+                                <div class="chart_number" id="ysslcs">
+                                </div>
+                                <div class="chart_label">实时里程数（当日）</div>
+                                <div class="chart_number" id="rsslcs">
+                                </div>
+                            </div>
+
+                            <div class="rs">
+                                <div class="chart_title">
+                                    <img src="image/ren.png"/>人
+                                </div>
+                                <div class="rs_one">
+                                    <div class="rs_one_item rs_item_l">当天待命人数</div>
+                                    <div class="rs_one_item rs_item_c" id="dtdmrs" ></div>
+                                    <div class="rs_one_item rs_item_r">
+                                        <span class="rs_item_num" ></span>
+                                        <span>个</span>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="rs_one">
+                                    <div class="rs_one_item rs_item_l">未签到人数</div>
+                                    <div class="rs_one_item rs_item_c" id="wcdrs" ></div>
+                                    <div class="rs_one_item rs_item_r">
+                                        <span class="rs_item_num" ></span>
+                                        <span>个</span>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="rs_one">
+                                    <div class="rs_one_item rs_item_l">现场作业人数</div>
+                                    <div class="rs_one_item rs_item_c" id="xczyrs" ></div>
+                                    <div class="rs_one_item rs_item_r">
+                                        <span class="rs_item_num" ></span>
+                                        <span>个</span>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="rs_one">
+                                    <div class="rs_one_item rs_item_l">在途中人数</div>
+                                    <div class="rs_one_item rs_item_c" id="ztzrs" ></div>
+                                    <div class="rs_one_item rs_item_r">
+                                        <span class="rs_item_num" ></span>
+                                        <span>个</span>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                            <div class="rs_icon">
+                                <div class="rs_icon_one">
+                                    <div class="rs_icon_item">
+                                        <div class="rs_icon_item_img"><img src="image/zybzry.png"/></div>
+                                        <div class="rs_icon_item_label">专业保障人员</div>
+                                        <div class="rs_icon_item_num" id="zybzry"></div>
+                                    </div>
+                                    <div class="rs_icon_item">
+                                        <div class="rs_icon_item_img"><img src="image/bzlc.png"/></div>
+                                        <div class="rs_icon_item_label">累计巡检</div>
+                                        <div class="rs_icon_item_num" id="ljxj"></div>
+                                    </div>
+                                    <div class="rs_icon_item">
+                                        <div class="rs_icon_item_img"><img src="image/ljqx.png"/></div>
+                                        <div class="rs_icon_item_label">累计抢修</div>
+                                        <div class="rs_icon_item_num"  id="ljqx"></div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="rs_icon_one">
+                                    <div class="rs_icon_item">
+                                        <div class="rs_icon_item_img"><img src="image/ghpj.png"/></div>
+                                        <div class="rs_icon_item_label">更换配件</div>
+                                        <div class="rs_icon_item_num" id="ghpj"></div>
+                                    </div>
+                                    <div class="rs_icon_item">
+                                        <div class="rs_icon_item_img"><img src="image/jljd.png"/></div>
+                                        <div class="rs_icon_item_label">计量检定</div>
+                                        <div class="rs_icon_item_num" id="jljd"></div>
+                                    </div>
+                                    <div class="rs_icon_item">
+                                        <div class="rs_icon_item_img"><img src="image/bzlc.png"/></div>
+                                        <div class="rs_icon_item_label">保障里程</div>
+                                        <div class="rs_icon_item_num" id="bzlc"></div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>     
+                                <div class="rs_icon_one">
+
+                                    <div class="rs_icon_item">
+                                        <div class="rs_icon_item_img"><img src="image/pxks.png"/></div>
+                                        <div class="rs_icon_item_label">培训考试</div>
+                                        <div class="rs_icon_item_num" id="pxks"></div>
+                                    </div>
+                                    <div class="rs_icon_item">
+                                        <div class="rs_icon_item_img"><img src="image/zkxy.png"/></div>
+                                        <div class="rs_icon_item_label">最快响应</div>
+                                        <div class="rs_icon_item_num" id="zkxysj"></div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="body_item body_c">
+                            <div class="map" id="map">
+
+                            </div>
+                            <div class="body_c_c">
+                                <div class="body_c_c_item body_c_c_l" id="rose" ></div>
+                                <div class="body_c_c_item body_c_c_c" id="table" >
+
+                                </div>
+                                <div class="body_c_c_item body_c_c_r" >
+                                    <div class="gz_icon_one">
+                                        <div class="gz_icon_item gzzs">
+                                            <div class="gz_icon_item_label">故障总数</div>
+                                            <div class="gz_icon_item_number">
+                                                <span class="bilingbiling" id="gztzzs"></span>
+                                                <span>个</span>
+                                            </div>
+                                        </div>
+                                        <div class="gz_icon_item ypds">
+                                            <div class="gz_icon_item_label ">已派单数</div>
+                                            <div class="gz_icon_item_number">
+                                                <span class="bilingbiling" id="ypds"></span>
+                                                <span>个</span>
+                                            </div>
+                                        </div>
+                                        <div class="gz_icon_item ybxs">
+                                            <div class="gz_icon_item_label ">已报修数</div>
+                                            <div class="gz_icon_item_number">
+                                                <span class="bilingbiling" id="ybxs"></span>
+                                                <span>个</span>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="gz_icon_one">
+                                        <div class="gz_icon_item wcls">
+                                            <div class="gz_icon_item_label">未处理数</div>
+                                            <div class="gz_icon_item_number">
+                                                <span class="bilingbiling"  id="wcls"></span>
+                                                <span>个</span>
+                                            </div>
+                                        </div>
+                                        <div class="gz_icon_item ywcs">
+                                            <div class="gz_icon_item_label ">已完成数</div>
+                                            <div class="gz_icon_item_number">
+                                                <span class="bilingbiling"  id="ywcs"></span>
+                                                <span>个</span>
+                                            </div>
+                                        </div>
+                                        <div class="gz_icon_item yhls">
+                                            <div class="gz_icon_item_label ">已忽略</div>
+                                            <div class="gz_icon_item_number">
+                                                <span class="bilingbiling"  id="yhls"></span>
+                                                <span>个</span>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                        <div class="body_item body_r">
+                            <div id="form">
+
+                            </div>
+                            <div id="picture_box">
+                                <div class="picture_box">
+                                    <img src="image/demo.png" id="zf0008a" alt="无图片" onerror="this.src='image/noshuju.png'"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div id="timer"></div> 
+        <canvas id="canvas"></canvas> 
+
+        <!--下面为接口调用必须引用插件-->
+        <script type="text/javascript" src="../lib/jquery/1.9.1/jquery.min.js"></script>
+
+        <!--下面为接口渲染插件-->
+        <script type="text/javascript" src="../WbodyJS/common.js"></script>
+        <script type="text/javascript" src="../WbodyJS/EasyAjax.js"></script>
+        <script type="text/javascript" src="../WbodyJS/WLayer.js"></script>
+        <script type="text/javascript" src="../WbodyJS/Process.js"></script>
+
+        <script type="text/javascript" src="../sra/Sra.js"></script>
+        <script type="text/javascript" src="../sra/Incubator.js"></script>
+        <script type="text/javascript" src="option.js"></script>
+        <script type="text/javascript" src="yz.js"></script>
+
+        <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=IuStA3X5pxqWDcr5nV0DEaC337Z1hzCg"></script>
+        <script type="text/javascript" src="https://cdn.bootcss.com/echarts/3.7.2/echarts.min.js"></script>
+        <script type="text/javascript" src=" https://cdn.bootcss.com/echarts/3.7.2/extension/bmap.min.js"></script>
+        <script>
+            var username;
+            var password;
+            var server = "http://192.168.3.100:9017/";
+            var zone;
+            var bzdw;
+            var pageTime = 60000;
+            var glTime = 5000;
+            function initClick() {
+                var a = new Array("日", "一", "二", "三", "四", "五", "六");
+                addTimer(function () {
+                    var date = new Date();
+                    var week = new Date().getDay();
+                    var pattern = "yyyy年MM月dd日,星期" + a[week];
+                    var pattern1 = "hh点mm分ss秒";
+                    $("#rq").text(DatePattern.getFormatDate(date, pattern));
+                    $("#sj").text(DatePattern.getFormatDate(date, pattern1));
+
+                }, 1000);
+            }
+            function initParam() {
+                initClick();
+                username = WUtil.getParameter("username");
+                password = WUtil.getParameter("password");
+                zone = WUtil.getParameter("zone");
+                bzdw = WUtil.getParameter("bzdw");
+                if (!username) {
+                    username = "ad";
+                } else {
+                    server = "";
+                }
+                if (!password) {
+                    password = "123456";
+                }
+                if (!zone) {
+                    zone = 2;
+                }
+                if (!bzdw) {
+                    bzdw = 3;
+                }
+            }
+            var setting = new Object();
+            var timer;
+            $(document).ready(function () {
+                initParam();
+                getData();
+                setInterval(getData, pageTime);
+            });
+            var points = [];
+            var dcjax = new EasyAjax();
+            function getData() {
+                dcjax.set({
+                    async: true,
+                    dataType: "text",
+                    url: server + "/acc/servlet/FuncServlet",
+                    params: {
+                        clientid: 101,
+                        username: username,
+                        password: password,
+                        requeststr: "&bm1=" + zone,
+                        repid: 252580,
+                        functype: 10
+                    },
+                    after: function (container, action) {
+                        if (action) {
+                            $(action).button("reset");
+                        }
+                        if (!container) {
+                            container = "body";
+                        }
+                        WLayer.qhide(container);
+                    },
+                    dataDealer: function (data, ext) {
+                        if (timer) {
+                            clearInterval(timer);
+                        }
+                        data = JSON.parse(data);
+                        data = data.datalist;
+                        for (var i  in data) {
+                            var item = data[i];
+                            var skey = item.skey;
+                            setting[skey] = item.svalue;
+                        }
+                        initRs(setting);
+                        initGS(setting);
+                        gl(setting);
+                        initYBP(setting);
+                        initRose(setting);
+                        return data;
+                    }
+                }).biu();
+                initData();
+            }
+            function gl(setting) {
+                var lcbh = Number(setting.lcbh);
+                var scount = pageTime / glTime;
+                var count = 1;
+                var diff;
+                if (Number(setting.diff) !== 0) {
+                    diff = (Number(setting.diff) / 1000000 * glTime) - Math.random() / 10 + Math.random() / 10;
+                } else {
+                    diff = 0;
+                }
+                setting.dylcs = Number(setting.dylcs) + Number(lcbh);
+                setting.drlcs = Number(setting.drlcs) - Math.random() / 10 + Number(lcbh);
+                timer = addTimer(function () {
+                    if (count > scount) {
+                        clearInterval(timer);
+                        return;
+                    }
+                    var zscount = 10;
+                    var zcount = 1;
+                    var zdiff = Number(diff) / zscount;
+                    var timer2 = addTimer(function () {
+                        if (zcount > zscount) {
+                            clearInterval(timer2);
+                            return;
+                        }
+                        setting.dylcs += zdiff;
+                        setting.drlcs += zdiff;
+                        initLCS(setting.dylcs, '#ysslcs');
+                        initLCS(setting.drlcs, '#rsslcs');
+                        zcount++;
+                    }, 10);
+
+                    count++;
+                }, glTime);
+            }
+            var formjax = new EasyAjax();
+            function initData() {
+                formjax.set({
+                    async: true,
+                    dataType: "text",
+                    url: server + "/acc/servlet/FuncServlet",
+                    params: {
+                        clientid: 101,
+                        username: username,
+                        password: password,
+                        requeststr: "&bzdw1=" + bzdw,
+                        repid: 242845,
+                        functype: 10
+                    },
+                    after: function (container, action) {
+                        if (action) {
+                            $(action).button("reset");
+                        }
+                        if (!container) {
+                            container = "body";
+                        }
+                        WLayer.qhide(container);
+                    },
+                    dataDealer: function (data, ext) {
+                        data = JSON.parse(data);
+                        data = data.datalist;
+                        $("#table").empty();
+                        var table3 = new Plugin("table");
+                        table3.protocol(["thead", "tbody"], tableSetting3).set("#table", style1).apply(data);
+                        for (var i in data) {
+                            var sfpd = data[i].sfpd;
+                            var point = {name: data[i].zm, x: data[i].jd, y: data[i].wd, sfpd: sfpd};
+                            points.push(point);
+                        }
+                        initMap(points);
+                        var json = data[0];
+                        $("#form").empty();
+                        var table = new Plugin("form");
+                        table.protocol(["title", "tbody"], tableSetting).set("#form", style).apply(json);
+                        $("#zf0008a").attr("src", json.zf0008a);
+
+                        var table1 = new Plugin("form");
+                        table1.protocol(["title", "tbody"], tableSetting1).set("#form", style).apply(json);
+                        var table2 = new Plugin("form");
+                        table2.protocol(["title", "tbody"], tableSetting2).set("#form", style).apply(json);
+                        var point = new BMap.Point(Number(json.jd), Number(json.wd));
+                        bmap.panTo(point);
+                        return data;
+                    }
+                }).biu();
+            }
+
+            $(document).on("click", ".table_body", function () {
+                var json = $(this).attr("data-json");
+                Log.openLog();
+                Log.debug(json);
+                json = JSON.parse(json);
+
+                $("#form").empty();
+                $("#zf0008a").attr("src", json.zf0008a);
+                var table = new Plugin("form");
+                table.protocol(["title", "tbody"], tableSetting).set("#form", style).apply(json);
+                var table1 = new Plugin("form");
+                table1.protocol(["title", "tbody"], tableSetting1).set("#form", style).apply(json);
+                var table2 = new Plugin("form");
+                table2.protocol(["title", "tbody"], tableSetting2).set("#form", style).apply(json);
+                var point = new BMap.Point(Number(json.jd), Number(json.wd));
+                bmap.panTo(point);
+            });
+
+            function initYBP(setting) {
+                var fontSize = parseInt($("html").css("font-size"));
+                fontSize = fontSize * 0.25;
+                var myChart = echarts.init(document.getElementById('xysj'));
+                myChart.setOption(getYBP("#0eeed0", "#012a59", Number(setting.pjxysj / 60).toFixed(1), "平均响应时间", fontSize));
+                myChart = echarts.init(document.getElementById('gzwxsj'));
+                myChart.setOption(getYBP("#3db5fa", "#012a59", Number(setting.pjgzxfsj / 60).toFixed(1), "平均故障修复时间", fontSize));
+                myChart = echarts.init(document.getElementById('gzcxsj'));
+                myChart.setOption(getYBP("#9e56f0", "#012a59", Number(setting.pjxysj / 60).toFixed(1), "平均故障持续时间", fontSize));
+            }
+
+            function initGS(s) {
+                $("#zybzry").text(s.zybzry + " 个");
+                $("#ljqx").text(s.ljqx + " 个");
+                $("#ghpj").text(s.ghpj + " 个");
+                $("#ljxj").text(s.ljxj + " 个");
+                $("#pxks").text(s.pxks + " 人次");
+                $("#zkxysj").text(s.zkxysj + " 分");
+                $("#jljd").text(s.jljd + " 个");
+                $("#bzlc").text(parseInt(s.bzlc) + " 公里");
+
+                $("#yhls").text(s.yhls);
+                $("#ywcs").text(s.ywcs);
+                $("#wcls").text(s.wcls);
+                $("#ybxs").text(s.ybxs);
+                $("#ypds").text(s.ypds);
+                $("#gztzzs").text(s.gztzzs);
+            }
+
+            function initRs(rs) {
+                var fontSize = parseInt($("html").css("font-size"));
+                var height = fontSize * 0.2;
+                var myChart = echarts.init(document.getElementById('dtdmrs'));
+                myChart.setOption(getRS(Number(rs.dmrs) / Number(rs.zrs), height));
+                $("#dtdmrs").parent().find(".rs_item_num").text(Number(rs.dmrs));
+                myChart = echarts.init(document.getElementById('wcdrs'));
+                myChart.setOption(getRS(Number(rs.wqdrs) / Number(rs.zrs), height));
+                $("#wcdrs").parent().find(".rs_item_num").text(Number(rs.wqdrs));
+                myChart = echarts.init(document.getElementById('xczyrs'));
+                myChart.setOption(getRS(Number(rs.xczyrs) / Number(rs.zrs), height));
+                $("#xczyrs").parent().find(".rs_item_num").text(Number(rs.xczyrs));
+                myChart = echarts.init(document.getElementById('ztzrs'));
+                myChart.setOption(getRS(Number(rs.tzrs) / Number(rs.zrs), height));
+                $("#ztzrs").parent().find(".rs_item_num").text(Number(rs.tzrs));
+            }
+            function initRose(setting) {
+                var fontSize = parseInt($("html").css("font-size"));
+                var height = fontSize;
+                var myChart = echarts.init(document.getElementById('rose'));
+                myChart.setOption(getRose(setting, height));
+            }
+        </script>
+
+    </body>
+</html>
