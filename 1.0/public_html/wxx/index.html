@@ -357,7 +357,7 @@
                 var count = 1;
                 var diff = Number(setting.diff) / 1000000 * glTime;
                 setting.dylcs = Number(setting.dylcs) + Number(lcbh);
-                setting.drlcs = Number(setting.drlcs) - Math.random()/10 + Number(lcbh);
+                setting.drlcs = Number(setting.drlcs) - Math.random() / 10 + Number(lcbh);
                 timer = addTimer(function () {
                     if (count > scount) {
                         clearInterval(timer);

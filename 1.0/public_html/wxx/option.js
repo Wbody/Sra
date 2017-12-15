@@ -7,21 +7,14 @@ function initMap(points) {
     var myChart = echarts.init(document.getElementById('map'));
     myChart.setOption(getMap(points));
     bmap = myChart.getModel().getComponent('bmap').getBMap();
-//    bmap.setMapStyle(mapStyle);
     bmap.addControl(new BMap.MapTypeControl({
         mapTypes: [BMAP_NORMAL_MAP, BMAP_SATELLITE_MAP, BMAP_HYBRID_MAP]
     }));
-    bmap.addTileLayer(new BMap.PanoramaCoverageLayer());
-
-    var stCtrl = new BMap.PanoramaControl(); //构造全景控件
-    stCtrl.setOffset(new BMap.Size(20, 80));
-    bmap.addControl(stCtrl);//添加全景控件
     bmap.addEventListener("addtilelayer", function (e) {
         bmap.setMapType(BMAP_HYBRID_MAP);
     });
 
     bmap.disableScrollWheelZoom();
-
 }
 function initLCS(lcs, target) {
     $(target).empty();
