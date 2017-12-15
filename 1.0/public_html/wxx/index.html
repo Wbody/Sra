@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>大屏幕监控</title>
+        <title>大屏幕监控(电脑)</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="../lib/Bootstrap/3.3.7/dist/css/bootstrap.min.css">
@@ -229,7 +229,7 @@
                             </div>
                             <div id="picture_box">
                                 <div class="picture_box">
-                                    <img src="image/demo.png" />
+                                    <img src="image/demo.png" id="zf0008a" alt="无图片" onerror="this.src='image/noshuju.png'"/>
                                 </div>
                             </div>
                         </div>
@@ -261,7 +261,7 @@
         <script>
             var username;
             var password;
-            var server = "http://192.168.3.100:9017/";
+            var server = "http://www.wxqxbz.cn:9017/";
             var zone;
             var bzdw;
             var pageTime = 60000;
@@ -290,7 +290,7 @@
                     server = "";
                 }
                 if (!password) {
-                    password = "123456";
+                    password = "fsRcTYZ0";
                 }
                 if (!zone) {
                     zone = 2;
@@ -316,7 +316,7 @@
                     params: {
                         clientid: 101,
                         username: username,
-                        password: password,
+                        epassword: password,
                         requeststr: "&bm1=" + zone,
                         repid: 252580,
                         functype: 10
@@ -355,7 +355,12 @@
                 var lcbh = Number(setting.lcbh);
                 var scount = pageTime / glTime;
                 var count = 1;
-                var diff = Number(setting.diff) / 1000000 * glTime;
+                var diff;
+                if (Number(setting.diff) !== 0) {
+                    diff = (Number(setting.diff) / 1000000 * glTime) - Math.random() / 10 + Math.random() / 10;
+                } else {
+                    diff = 0;
+                }
                 setting.dylcs = Number(setting.dylcs) + Number(lcbh);
                 setting.drlcs = Number(setting.drlcs) - Math.random() / 10 + Number(lcbh);
                 timer = addTimer(function () {
@@ -390,7 +395,7 @@
                     params: {
                         clientid: 101,
                         username: username,
-                        password: password,
+                        epassword: password,
                         requeststr: "&bzdw1=" + bzdw,
                         repid: 242845,
                         functype: 10
@@ -420,6 +425,7 @@
                         $("#form").empty();
                         var table = new Plugin("form");
                         table.protocol(["title", "tbody"], tableSetting).set("#form", style).apply(json);
+                        $("#zf0008a").attr("src", json.zf0008a);
                         var table1 = new Plugin("form");
                         table1.protocol(["title", "tbody"], tableSetting1).set("#form", style).apply(json);
                         var table2 = new Plugin("form");
@@ -438,6 +444,7 @@
                 json = JSON.parse(json);
 
                 $("#form").empty();
+                 $("#zf0008a").attr("src", json.zf0008a);
                 var table = new Plugin("form");
                 table.protocol(["title", "tbody"], tableSetting).set("#form", style).apply(json);
                 var table1 = new Plugin("form");
@@ -450,13 +457,13 @@
 
             function initYBP(setting) {
                 var fontSize = parseInt($("html").css("font-size"));
-                fontSize = fontSize * 0.2;
+                fontSize = fontSize * 0.25;
                 var myChart = echarts.init(document.getElementById('xysj'));
-                myChart.setOption(getYBP("#0eeed0", "#012a59", setting.pjxysj, "平均响应时间", fontSize));
+                myChart.setOption(getYBP("#0eeed0", "#012a59", Number(setting.pjxysj / 60).toFixed(1), "平均响应时间", fontSize));
                 myChart = echarts.init(document.getElementById('gzwxsj'));
-                myChart.setOption(getYBP("#3db5fa", "#012a59", setting.pjgzxfsj, "平均故障修复时间", fontSize));
+                myChart.setOption(getYBP("#3db5fa", "#012a59", Number(setting.pjgzxfsj / 60).toFixed(1), "平均故障修复时间", fontSize));
                 myChart = echarts.init(document.getElementById('gzcxsj'));
-                myChart.setOption(getYBP("#9e56f0", "#012a59", setting.pjxysj, "平均故障持续时间", fontSize));
+                myChart.setOption(getYBP("#9e56f0", "#012a59", Number(setting.pjxysj / 60).toFixed(1), "平均故障持续时间", fontSize));
             }
 
             function initGS(s) {
